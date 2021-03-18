@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.Ruserdata
+*.zip
+errorReportSql.txt
+errorReportR.txt
+*.tex
+.DS_Store
+*.history
+.RDataTmp
+*.log
