@@ -140,9 +140,9 @@ for (i in (1:nrow(conceptSetSignature))) {
     
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
-    } else (dateRange[[j]] == 'icd9') {
+    } else if (dateRange[[j]] == 'icd9') {
       occurrenceStartDateAttribute <- dateAttributeStartDateBeforeICD10
-    } else (dateRange[[j]] == 'icd10') {
+    } else if (dateRange[[j]] == 'icd10') {
       occurrenceStartDateAttribute <- dateAttributeStartDateAfterICD10
     }
     
@@ -191,9 +191,9 @@ for (i in (1:nrow(conceptSetSignature))) {
     
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
-    } else (dateRange[[j]] == 'icd9') {
+    } else if (dateRange[[j]] == 'icd9') {
       occurrenceStartDateAttribute <- dateAttributeStartDateBeforeICD10
-    } else (dateRange[[j]] == 'icd10') {
+    } else if (dateRange[[j]] == 'icd10') {
       occurrenceStartDateAttribute <- dateAttributeStartDateAfterICD10
     }
     
@@ -240,9 +240,9 @@ for (i in (1:nrow(conceptSetSignature))) {
     
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
-    } else (dateRange[[j]] == 'icd9') {
+    } else if (dateRange[[j]] == 'icd9') {
       occurrenceStartDateAttribute <- dateAttributeStartDateBeforeICD10
-    } else (dateRange[[j]] == 'icd10') {
+    } else if (dateRange[[j]] == 'icd10') {
       occurrenceStartDateAttribute <- dateAttributeStartDateAfterICD10
     }
     
