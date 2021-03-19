@@ -7,7 +7,7 @@ conceptSetSignature <- readRDS(
   file = file.path(
     projectFolder,
     "inst",
-    "preprocessed",
+    "ConceptSets",
     "conceptSetSignature.rds"
   )
 ) %>%
@@ -305,6 +305,6 @@ data <- dplyr::bind_rows(data) %>%
   dplyr::arrange(.data$cohortId)
 
 saveRDS(object = data,
-        file.path(rstudioapi::getActiveProject(), 'inst', 'CohortTemplates', 'Cohorts20210315.rds'))
+        file.path(rstudioapi::getActiveProject(), 'inst', 'Cohorts', 'Cohorts20210315.rds'))
 
 
