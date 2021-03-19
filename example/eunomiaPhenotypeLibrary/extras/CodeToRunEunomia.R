@@ -37,29 +37,29 @@ EunomiaPhenotypeLibrary::runCohortDiagnostics(
   minCellCount = 0
 )
 
-
-connectionDetails <- createConnectionDetails(dbms = "postgresql",
-                                             server = paste(Sys.getenv("shinydbServer"),
-                                                            Sys.getenv("shinydbDatabase"),
-                                                            sep = "/"),
-                                             port = Sys.getenv("shinydbPort"),
-                                             user = Sys.getenv("shinyDbUserGowtham"),
-                                             password = Sys.getenv("shinyDbPasswordGowtham"))
-
-
-resultsSchema <- "eunomia"
-createResultsDataModel(connectionDetails = connectionDetails, schema = resultsSchema)
-
-
-path = outputFolder
-zipFilesToUpload <- list.files(path = path, 
-                               pattern = ".zip", 
-                               recursive = TRUE, 
-                               full.names = TRUE)
-
-for (i in (1:length(zipFilesToUpload))) {
-  uploadResults(connectionDetails = connectionDetails,
-                schema = resultsSchema,
-                zipFileName = zipFilesToUpload[[i]])
-}
+# 
+# connectionDetailsToUpload <- createConnectionDetails(dbms = "postgresql",
+#                                              server = paste(Sys.getenv("shinydbServer"),
+#                                                             Sys.getenv("shinydbDatabase"),
+#                                                             sep = "/"),
+#                                              port = Sys.getenv("shinydbPort"),
+#                                              user = Sys.getenv("shinyDbUserGowtham"),
+#                                              password = Sys.getenv("shinyDbPasswordGowtham"))
+# 
+# 
+# resultsSchema <- "eunomia"
+# createResultsDataModel(connectionDetails = connectionDetailsToUpload, schema = resultsSchema)
+# 
+# 
+# path = outputFolder
+# zipFilesToUpload <- list.files(path = path, 
+#                                pattern = ".zip", 
+#                                recursive = TRUE, 
+#                                full.names = TRUE)
+# 
+# for (i in (1:length(zipFilesToUpload))) {
+#   uploadResults(connectionDetails = connectionDetailsToUpload,
+#                 schema = resultsSchema,
+#                 zipFileName = zipFilesToUpload[[i]])
+# }
 

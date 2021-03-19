@@ -15,10 +15,10 @@
 # limitations under the License.
 
 packageName = "EunomiaPhenotypeLibrary"
-remotes::install_github("OHDSI/CohortDiagnostics",
-                        ref = "develop",
-                        dependencies = TRUE)
-remotes::install_github("OHDSI/ROhdsiWebApi")
+# remotes::install_github("OHDSI/CohortDiagnostics",
+#                         ref = "develop",
+#                         dependencies = TRUE)
+# remotes::install_github("OHDSI/ROhdsiWebApi", ref = "develop")
 library(CohortDiagnostics)
 
 projectDirectory <- file.path(rstudioapi::getActiveProject(), "outputFolder")
@@ -38,10 +38,12 @@ webApiCohorts <- ROhdsiWebApi::getCohortDefinitionsMetaData(baseUrl = baseUrl)
 studyCohorts <-  webApiCohorts %>% 
   dplyr::filter(.data$id %in% c(18345,18346,14906,18351,18347,18348,14907,
                                 18349,18350,18352,17493,17492,14909,18342,
-                                17693,17692,17695,17694,17720))
+                                17693,17692,17695,17694,17720, 
+                                21402
+  ))
 
 cohortsToCreate <- list()
-for (i in (1:length(studyCohorts))) {
+for (i in (1:nrow(studyCohorts))) {
   cohortId <- studyCohorts$id[[i]]
   cohortDefinition <-
     ROhdsiWebApi::getCohortDefinition(cohortId = cohortId, baseUrl = baseUrl)
@@ -75,8 +77,8 @@ readr::write_excel_csv(x = cohortsToCreate, na = "", file = "inst/settings/Cohor
 ################ 3. add referentConceptId
 
 
-cohortsToCreate <- readxl::read_excel(path = "inst/settings/CohortsToCreate.xlsx", na = "")
-readr::write_excel_csv(x = cohortsToCreate, na = "", file = "inst/settings/CohortsToCreate.csv", append = FALSE)
+# cohortsToCreate <- readxl::read_excel(path = "inst/settings/CohortsToCreate.xlsx", na = "")
+# readr::write_excel_csv(x = cohortsToCreate, na = "", file = "inst/settings/CohortsToCreate.csv", append = FALSE)
 
 # Insert cohort definitions from ATLAS into package -----------------------
 ROhdsiWebApi::insertCohortDefinitionSetInPackage(

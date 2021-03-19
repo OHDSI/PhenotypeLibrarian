@@ -1,4 +1,236 @@
 cohort_id,concept_set_id,concept_set_sql,concept_set_name,concept_set_expression
+14906,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (1118084)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (1118084)
+  and c.invalid_reason is null
+
+) I
+) C",celecoxib,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                  1118084,
+""CONCEPT_NAME"": ""celecoxib"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""140587"",
+""DOMAIN_ID"": ""Drug"",
+""VOCABULARY_ID"": ""RxNorm"",
+""CONCEPT_CLASS_ID"": ""Ingredient"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
+18345,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (1118084)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (1118084)
+  and c.invalid_reason is null
+
+) I
+) C",celecoxib,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                  1118084,
+""CONCEPT_NAME"": ""celecoxib"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""140587"",
+""DOMAIN_ID"": ""Drug"",
+""VOCABULARY_ID"": ""RxNorm"",
+""CONCEPT_CLASS_ID"": ""Ingredient"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
+18346,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (1118084)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (1118084)
+  and c.invalid_reason is null
+
+) I
+) C",celecoxib,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                  1118084,
+""CONCEPT_NAME"": ""celecoxib"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""140587"",
+""DOMAIN_ID"": ""Drug"",
+""VOCABULARY_ID"": ""RxNorm"",
+""CONCEPT_CLASS_ID"": ""Ingredient"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
+18351,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (1118084)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (1118084)
+  and c.invalid_reason is null
+
+) I
+) C",celecoxib,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                  1118084,
+""CONCEPT_NAME"": ""celecoxib"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""140587"",
+""DOMAIN_ID"": ""Drug"",
+""VOCABULARY_ID"": ""RxNorm"",
+""CONCEPT_CLASS_ID"": ""Ingredient"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
+14907,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (1124300)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (1124300)
+  and c.invalid_reason is null
+
+) I
+) C",diclofenac,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                  1124300,
+""CONCEPT_NAME"": ""diclofenac"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""3355"",
+""DOMAIN_ID"": ""Drug"",
+""VOCABULARY_ID"": ""RxNorm"",
+""CONCEPT_CLASS_ID"": ""Ingredient"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
+18352,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (1124300)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (1124300)
+  and c.invalid_reason is null
+
+) I
+) C",diclofenac,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                  1124300,
+""CONCEPT_NAME"": ""diclofenac"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""3355"",
+""DOMAIN_ID"": ""Drug"",
+""VOCABULARY_ID"": ""RxNorm"",
+""CONCEPT_CLASS_ID"": ""Ingredient"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
+14907,1,"SELECT 1 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (192671)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (192671)
+  and c.invalid_reason is null
+
+) I
+) C",Gastrointestinal hemorrhage,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                   192671,
+""CONCEPT_NAME"": ""Gastrointestinal hemorrhage"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""74474003"",
+""DOMAIN_ID"": ""Condition"",
+""VOCABULARY_ID"": ""SNOMED"",
+""CONCEPT_CLASS_ID"": ""Clinical Finding"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
+14909,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (192671)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (192671)
+  and c.invalid_reason is null
+
+) I
+) C",Gastrointestinal hemorrhage ConceptSet,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                   192671,
+""CONCEPT_NAME"": ""Gastrointestinal hemorrhage"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""74474003"",
+""DOMAIN_ID"": ""Condition"",
+""VOCABULARY_ID"": ""SNOMED"",
+""CONCEPT_CLASS_ID"": ""Clinical Finding"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
 17492,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
 ( 
   select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (192671)
@@ -29,6 +261,64 @@ UNION  select c.concept_id
 } 
 ]"
 17493,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (192671)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (192671)
+  and c.invalid_reason is null
+
+) I
+) C",Gastrointestinal hemorrhage,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                   192671,
+""CONCEPT_NAME"": ""Gastrointestinal hemorrhage"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""74474003"",
+""DOMAIN_ID"": ""Condition"",
+""VOCABULARY_ID"": ""SNOMED"",
+""CONCEPT_CLASS_ID"": ""Clinical Finding"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
+18342,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (192671)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (192671)
+  and c.invalid_reason is null
+
+) I
+) C",Gastrointestinal hemorrhage ConceptSet,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                   192671,
+""CONCEPT_NAME"": ""Gastrointestinal hemorrhage"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""74474003"",
+""DOMAIN_ID"": ""Condition"",
+""VOCABULARY_ID"": ""SNOMED"",
+""CONCEPT_CLASS_ID"": ""Clinical Finding"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
+18352,1,"SELECT 1 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
 ( 
   select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (192671)
 UNION  select c.concept_id
@@ -116,6 +406,35 @@ UNION  select c.concept_id
 } 
 ]"
 17694,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (201826)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (201826)
+  and c.invalid_reason is null
+
+) I
+) C",Type 2 diabetes mellitus,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                   201826,
+""CONCEPT_NAME"": ""Type 2 diabetes mellitus"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""44054006"",
+""DOMAIN_ID"": ""Condition"",
+""VOCABULARY_ID"": ""SNOMED"",
+""CONCEPT_CLASS_ID"": ""Clinical Finding"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
+17695,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
 ( 
   select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (201826)
 UNION  select c.concept_id
@@ -360,6 +679,131 @@ UNION  select c.concept_id
 ""DOMAIN_ID"": ""Observation"",
 ""VOCABULARY_ID"": ""SNOMED"",
 ""CONCEPT_CLASS_ID"": ""Context-dependent"" 
+},
+""isExcluded"": false,
+""includeDescendants"": true,
+""includeMapped"": false 
+} 
+]"
+18347,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (1124300)
+
+) I
+) C",diclofenac,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                  1124300,
+""CONCEPT_NAME"": ""diclofenac"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""3355"",
+""DOMAIN_ID"": ""Drug"",
+""VOCABULARY_ID"": ""RxNorm"",
+""CONCEPT_CLASS_ID"": ""Ingredient"" 
+},
+""isExcluded"": false,
+""includeDescendants"": false,
+""includeMapped"": false 
+} 
+]"
+18348,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (1124300)
+
+) I
+) C",diclofenac,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                  1124300,
+""CONCEPT_NAME"": ""diclofenac"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""3355"",
+""DOMAIN_ID"": ""Drug"",
+""VOCABULARY_ID"": ""RxNorm"",
+""CONCEPT_CLASS_ID"": ""Ingredient"" 
+},
+""isExcluded"": false,
+""includeDescendants"": false,
+""includeMapped"": false 
+} 
+]"
+18349,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (1124300)
+
+) I
+) C",diclofenac,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                  1124300,
+""CONCEPT_NAME"": ""diclofenac"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""3355"",
+""DOMAIN_ID"": ""Drug"",
+""VOCABULARY_ID"": ""RxNorm"",
+""CONCEPT_CLASS_ID"": ""Ingredient"" 
+},
+""isExcluded"": false,
+""includeDescendants"": false,
+""includeMapped"": false 
+} 
+]"
+18350,0,"SELECT 0 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (1124300)
+
+) I
+) C",diclofenac,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                  1124300,
+""CONCEPT_NAME"": ""diclofenac"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""3355"",
+""DOMAIN_ID"": ""Drug"",
+""VOCABULARY_ID"": ""RxNorm"",
+""CONCEPT_CLASS_ID"": ""Ingredient"" 
+},
+""isExcluded"": false,
+""includeDescendants"": false,
+""includeMapped"": false 
+} 
+]"
+18350,1,"SELECT 1 as codeset_id, c.concept_id FROM (select distinct I.concept_id FROM
+( 
+  select concept_id from @vocabulary_database_schema.CONCEPT where concept_id in (4180628)
+UNION  select c.concept_id
+  from @vocabulary_database_schema.CONCEPT c
+  join @vocabulary_database_schema.CONCEPT_ANCESTOR ca on c.concept_id = ca.descendant_concept_id
+  and ca.ancestor_concept_id in (4180628)
+  and c.invalid_reason is null
+
+) I
+) C",Disorder of body system,"[
+ {
+ ""concept"": {
+ ""CONCEPT_ID"":                  4180628,
+""CONCEPT_NAME"": ""Disorder of body system"",
+""STANDARD_CONCEPT"": ""S"",
+""STANDARD_CONCEPT_CAPTION"": ""Standard"",
+""INVALID_REASON"": ""V"",
+""INVALID_REASON_CAPTION"": ""Valid"",
+""CONCEPT_CODE"": ""362965005"",
+""DOMAIN_ID"": ""Condition"",
+""VOCABULARY_ID"": ""SNOMED"",
+""CONCEPT_CLASS_ID"": ""Clinical Finding"" 
 },
 ""isExcluded"": false,
 ""includeDescendants"": true,
