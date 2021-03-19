@@ -144,7 +144,7 @@ shiny::shinyServer(function(input, output, session) {
                      "userAuthenticated" = FALSE, 
                      "markdown" = markdown())
     shiny::withProgress(message = "Saving your phenotype note...", {
-      googlesheets4::sheet_append(Sys.getenv('cohortDiagnosticsCommentsGoogleSheets'),
+      googlesheets4::sheet_append(Sys.getenv('PhenotypeLibrarianCommentsGoogleSheets'),
                                   data = df, 
                                   sheet = tab)
     })
@@ -363,7 +363,7 @@ shiny::shinyServer(function(input, output, session) {
   ## Reading Google Sheet
   readFromGoogleSheet <- shiny::reactive({
     searchClick()
-    return(googlesheets4::read_sheet(Sys.getenv('cohortDiagnosticsCommentsGoogleSheets'),
+    return(googlesheets4::read_sheet(Sys.getenv('PhenotypeLibrarianCommentsGoogleSheets'),
                                      sheet = currentReadingTab(), 
                                      trim_ws = TRUE))
   })

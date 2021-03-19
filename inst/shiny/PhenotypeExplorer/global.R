@@ -25,7 +25,7 @@ source("R/Connections.R")
 source("R/HelperFunctions.R")
 source("R/ModifyDataSource.R")
 
-googlesheets4::gs4_auth(path = Sys.getenv('cohortDiagnosticsAuthorizationJson'))
+googlesheets4::gs4_auth(path = Sys.getenv('PhenotypeLibrarianAuthorizationJson'))
 assign(x = "dbms", value = "postgresql", envir = .GlobalEnv)
 assign(x = "port", value = 5432, envir = .GlobalEnv)
 

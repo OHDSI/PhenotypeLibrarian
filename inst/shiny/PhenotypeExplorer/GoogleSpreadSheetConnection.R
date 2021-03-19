@@ -1,10 +1,10 @@
 library(googlesheets4)
 
 # AUROTHIZATION
-googlesheets4::gs4_auth(path = Sys.getenv('cohortDiagnosticsAuthorizationJson'))
+googlesheets4::gs4_auth(path = Sys.getenv('PhenotypeLibrarianAuthorizationJson'))
 
 # READING FROM EXISTING spread_sheet
-googlesheets4::read_sheet(Sys.getenv('cohortDiagnosticsCommentsGoogleSheets'))
+googlesheets4::read_sheet(Sys.getenv('PhenotypeLibrarianCommentsGoogleSheets'))
 
 # CREATING NEW spread_sheet, WITH SHEET NAMED FLOWERS, Brackets at the end are necessary to show the sheet ID
 (ss <- googlesheets4::gs4_create("cohort-Test", sheets = list(flowers = head(iris))))
@@ -25,7 +25,7 @@ googlesheets4::read_sheet("1O3L-IakLeamhV-sA1U90mtnxWMWOyvzu0Yn3O0sifoM",sheet =
 # Appending rows into google sheet
 df <- data.frame("dateTimeEntry" = Sys.time(),"menuItem" = "search", "databaseId" = "123" ,"cohortId" = "abc", "userName" = Sys.info()[['effective_user']],
                  "userPriority" = 0, "commentPriority" = 0, "userAuthenticated" = FALSE, "markdown" = "<h1>Hello</h1>*#BB")
-googlesheets4::sheet_append(Sys.getenv('cohortDiagnosticsCommentsGoogleSheets'),data = df)
+googlesheets4::sheet_append(Sys.getenv('PhenotypeLibrarianCommentsGoogleSheets'),data = df)
 
 # Creating the service Account
 # ********************************************************************************
