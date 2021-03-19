@@ -15,7 +15,9 @@ Imports:Capr,
   ConceptSetDiagnostics,
   RJSONIO,
   dplyr
-Suggests:knitr
+Suggests:knitr,
+  devtools,
+  spelling
 Remotes:
   ohdsi/ROhdsiWebApi,
   ohdsi/DatabaseConnector,

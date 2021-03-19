@@ -1,6 +1,6 @@
 # @file PackageMaintenance
 #
-# Copyright 2020 Observational Health Data Sciences and Informatics
+# Copyright 2021 Observational Health Data Sciences and Informatics
 #
 # This file is part of PhenotypeLibrarian
 # 
@@ -17,11 +17,14 @@
 # limitations under the License.
 
 # Format and check code
-# OhdsiRTools::formatRFolder() (note: this function has been impacted by change in formatR)
+# OhdsiRTools::formatRFolder()  #(note: this function has been impacted by change in formatR)
 OhdsiRTools::checkUsagePackage("PhenotypeLibrarian")
 OhdsiRTools::updateCopyrightYearFolder()
 devtools::spell_check()
-spelling::spell_check_files(list.files(path = "inst/shiny", pattern = "*.html", recursive = TRUE, full.names = TRUE))
+spelling::spell_check_files(list.files(path = "inst/shiny",
+                                       pattern = "*.html",
+                                       recursive = TRUE,
+                                       full.names = TRUE))
 
 
 # Create manual and vignettes:
@@ -29,22 +32,12 @@ unlink("extras/PhenotypeLibrarian.pdf")
 shell("R CMD Rd2pdf ./ --output=extras/PhenotypeLibrarian.pdf")
 
 dir.create(path = "./inst/doc/", showWarnings = FALSE)
-rmarkdown::render("vignettes/PhenotypeLibrarianUsingWebApi.Rmd",
-                  output_file = "../inst/doc/PhenotypeLibrarianUsingWebApi.pdf",
-                  rmarkdown::pdf_document(latex_engine = "pdflatex",
-                                          toc = TRUE,
-                                          number_sections = TRUE))
 
 pkgdown::build_site()
 OhdsiRTools::fixHadesLogo()
 
-# Regenerate DDL
-pathToCsv <- file.path("inst", "settings", "resultsDataModelSpecification.csv")
-specifications <- readr::read_csv(file = pathToCsv, col_types = readr::cols())
-source("extras/ResultsDataModel.R")
-createDdl("inst/sql/postgresql/CreateResultsDataModel.sql", specifications)
 
 # Copy data model specs to Shiny app
-file.copy(from = "inst/settings/resultsDataModelSpecification.csv", 
-          to = "inst/shiny/DiagnosticsExplorer/resultsDataModelSpecification.csv",
+file.copy(from = file.path(system.file(package = "CohortDiagnostics"), "/settings/resultsDataModelSpecification.csv"),
+          to = "inst/shiny/PhenotypeExplorer/resultsDataModelSpecification.csv",
           overwrite = TRUE)
