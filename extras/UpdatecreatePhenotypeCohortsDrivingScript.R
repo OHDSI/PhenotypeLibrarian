@@ -2,10 +2,11 @@
 # Create Cohorts from templates
 ##############################
 
-
+library(PhenotypeLibrarian)
 conceptSetSignature <- readRDS(
   file = file.path(
     projectFolder,
+    "inst",
     "preprocessed",
     "conceptSetSignature.rds"
   )
@@ -25,7 +26,6 @@ library(Capr)
 library(CirceR)
 library(DatabaseConnector)
 library(magrittr)
-library(PhenotypeLibrary)
 
 connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "postgresql",
                                                                 user = Sys.getenv("shinyDbUserGowtham"),
@@ -86,7 +86,7 @@ counter <- 0
 cohortTemplate1 <- list()
 for (i in (1:nrow(conceptSetSignature))) {
   for (j in (1:length(dateRange))) {
-
+    
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
     } else if (dateRange[[j]] == 'icd9') {
@@ -94,7 +94,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     } else if (dateRange[[j]] == 'icd10') {
       occurrenceStartDateAttribute <- dateAttributeStartDateAfterICD10
     }
-
+    
     templateType <- 'template1'
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,
@@ -103,11 +103,11 @@ for (i in (1:nrow(conceptSetSignature))) {
                                            resultSchema = "@target_database_schema", #change me
                                            vocabularySchema = "@vocabulary_database_schema",
                                            generateStats = TRUE)
-    rendered <- PhenotypeLibrary::generateConditionObservationProcedurePhenotypes(genOp = genOp,
-                                                                                  name = conceptSetSignature$conceptSetExpressionName[i],
-                                                                                  cseJson = conceptSetSignature$conceptSetExpressionJson[i],
-                                                                                  templateFn = templateType,
-                                                                                  occurrenceStartDateAttribute = occurrenceStartDateAttribute)
+    rendered <- PhenotypeLibrarian::generateConditionObservationProcedurePhenotypes(genOp = genOp,
+                                                                                    name = conceptSetSignature$conceptSetExpressionName[i],
+                                                                                    cseJson = conceptSetSignature$conceptSetExpressionJson[i],
+                                                                                    templateFn = templateType,
+                                                                                    occurrenceStartDateAttribute = occurrenceStartDateAttribute)
     if (length(rendered) == 3) {
       counter <- counter + 1
       circeJson = rendered$circeJson %>% RJSONIO::fromJSON(digits = 23) %>% RJSONIO::toJSON(digits = 23, pretty = TRUE)
@@ -137,7 +137,7 @@ cohortTemplate1 <- dplyr::bind_rows(cohortTemplate1)
 cohortTemplate2 <- list()
 for (i in (1:nrow(conceptSetSignature))) {
   for (j in (1:length(dateRange))) {
-
+    
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
     } else (dateRange[[j]] == 'icd9') {
@@ -145,7 +145,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     } else (dateRange[[j]] == 'icd10') {
       occurrenceStartDateAttribute <- dateAttributeStartDateAfterICD10
     }
-
+    
     templateType <- 'template2'
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,
@@ -188,7 +188,7 @@ cohortTemplate2 <- dplyr::bind_rows(cohortTemplate2)
 cohortTemplate3 <- list()
 for (i in (1:nrow(conceptSetSignature))) {
   for (j in (1:length(dateRange))) {
-
+    
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
     } else (dateRange[[j]] == 'icd9') {
@@ -196,7 +196,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     } else (dateRange[[j]] == 'icd10') {
       occurrenceStartDateAttribute <- dateAttributeStartDateAfterICD10
     }
-
+    
     templateType <- 'template3'
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,
@@ -237,7 +237,7 @@ cohortTemplate3 <- dplyr::bind_rows(cohortTemplate3)
 cohortTemplate4 <- list()
 for (i in (1:nrow(conceptSetSignature))) {
   for (j in (1:length(dateRange))) {
-
+    
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
     } else (dateRange[[j]] == 'icd9') {
@@ -245,7 +245,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     } else (dateRange[[j]] == 'icd10') {
       occurrenceStartDateAttribute <- dateAttributeStartDateAfterICD10
     }
-
+    
     templateType <- 'template4'
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,

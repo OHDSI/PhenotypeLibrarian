@@ -1,19 +1,19 @@
 library(magrittr)
-library(PhenotypeLibrary)
+library(PhenotypeLibrarian)
 # get conceptSets from all cohort json
 # remotes::install_github("ohdsi/ConceptSetDiagnostics",
 #                         dependencies = FALSE)
 
 projectFolder <- rstudioapi::getActiveProject()
-preProcessedFolder <- file.path(projectFolder, "preprocessed")
-dir.create(path = preProcessedFolder, showWarnings = FALSE)
+preProcessedFolder <- file.path(projectFolder, "inst", "preprocessed")
+dir.create(path = "inst", preProcessedFolder, showWarnings = FALSE)
 
 #### collect all JSON
 ####
 ####
 #### Collect from github repositories
 repositories <-
-  PhenotypeLibrary:::getRepositoryDetailsForGitHubOrganization(
+  PhenotypeLibrarian:::getRepositoryDetailsForGitHubOrganization(
     organizations = c('OHDSI-studies', 'OHDSI'),
     githubToken = Sys.getenv("githubTokenSimple")
   )
@@ -22,7 +22,7 @@ filesInGitHub <- list()
 for (i in (1:nrow(repositories))) {
   repository <- repositories[i,]
   files <-
-    PhenotypeLibrary:::getListOfFilesInGitHubRepositories(
+    PhenotypeLibrarian:::getListOfFilesInGitHubRepositories(
       repo = paste0(repository$organization, '/', repository$name),
       branch = repository$defaultBranch,
       githubToken = Sys.getenv("githubTokenSimple")
@@ -56,7 +56,7 @@ filesInGitHubJson <-
 # copy files to local folder
 cohortJsonInGitHub <- list()
 dir.create(
-  path = file.path(projectFolder, "preprocessed"),
+  path = file.path(projectFolder, "inst", "preprocessed"),
   showWarnings = FALSE,
   recursive = TRUE
 )
@@ -134,12 +134,14 @@ for (i in (1:length(cohortJsonInGitHub))) {
 cohortJsonInGitHub <- dplyr::bind_rows(data)
 saveRDS(
   object = cohortJsonInGitHub,
-  file = file.path(projectFolder, "preprocessed", "cohortJsonInGithub.rds")
+  file = file.path(projectFolder, "inst", "preprocessed", "cohortJsonInGithub.rds")
 )
 
 
+
+
 ##################### collect from local folder
-pathToLocalFilesWithJson <- "D:/git/github/ohdsi/json"
+pathToLocalFilesWithJson <- "D:/git/json"
 localJsonFiles <-
   dplyr::tibble(
     fullName = list.files(
@@ -225,7 +227,7 @@ for (i in (1:length(cohortJsonInLocal))) {
 cohortJsonInLocal <- dplyr::bind_rows(data)
 saveRDS(
   object = cohortJsonInLocal,
-  file = file.path(projectFolder, "preprocessed", "cohortJsonInLocal.rds")
+  file = file.path(projectFolder,"inst", "preprocessed", "cohortJsonInLocal.rds")
 )
 
 
@@ -250,9 +252,9 @@ connection <-
 
 ############# create unique concept sets
 cohortJsonInGitHub <-
-  readRDS(file = file.path(projectFolder, "preprocessed", "cohortJsonInGithub.rds"))
+  readRDS(file = file.path(projectFolder, "inst","preprocessed", "cohortJsonInGithub.rds"))
 cohortJsonInLocalFile <-
-  readRDS(file = file.path(projectFolder, "preprocessed", "cohortJsonInLocal.rds"))
+  readRDS(file = file.path(projectFolder, "inst","preprocessed", "cohortJsonInLocal.rds"))
 
 allJsons <-
   dplyr::bind_rows(
@@ -334,6 +336,7 @@ saveRDS(
   object = conceptSetsFromCohortsToPostProcess,
   file = file.path(
     projectFolder,
+    "inst",
     "preprocessed",
     "conceptSetsFromCohortsToPostProcess.rds"
   )
@@ -344,6 +347,7 @@ saveRDS(
 conceptSetsFromCohortsToPostProcess <-
   readRDS(file = file.path(
     projectFolder,
+    "inst",
     "preprocessed",
     "conceptSetsFromCohortsToPostProcess.rds"
   )) %>%
@@ -475,6 +479,7 @@ saveRDS(
   object = conceptSetSignature,
   file = file.path(
     projectFolder,
+    "inst",
     "preprocessed",
     "conceptSetSignature.rds"
   )
