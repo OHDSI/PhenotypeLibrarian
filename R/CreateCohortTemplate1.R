@@ -36,8 +36,6 @@ createCohortTemplate1 <- function(query, nm, genOp, IPVisit = NULL) {
                              criteriaList = crit)
 
   #turn group into InclusionRules
-  #remove occurrence start date attribute from list of query
-  query <- lapply(query, removeAttributeType, attrName = "OccurrenceStartDate")
   irs <- Capr::createInclusionRules(Name = paste(nm, "IRs", sep = "_"),
                                     Contents = list(rule1),
                                     Limit = "All")
