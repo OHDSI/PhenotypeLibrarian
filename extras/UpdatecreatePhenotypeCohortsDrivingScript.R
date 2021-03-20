@@ -107,6 +107,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     }
     
     templateType <- 'template1'
+    templateTypeAbbreviation <- paste0('T1', dateRange[[j]])
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,
                                            cdmSchema = "@cdm_database_schema", #change me
@@ -122,15 +123,24 @@ for (i in (1:nrow(conceptSetSignature))) {
     if (length(rendered) == 3) {
       counter <- counter + 1
       circeJson = rendered$circeJson %>% RJSONIO::fromJSON(digits = 23) %>% RJSONIO::toJSON(digits = 23, pretty = TRUE)
+      logicDescription <- paste0(templateTypeAbbreviation, 
+                                 " ",
+                                 stringr::str_replace(string = logicDescriptionTemplate,
+                                               pattern = 'TEMPLATETEMPLATE', 
+                                               replacement = conceptSetSignature$conceptSetExpressionName[i]))
+      
       cohortTemplate1[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
                                             cohortCirceJsonFromCapr = circeJson,
                                             cohortHumanReadable = rendered$cohortRead,
                                             cohortOhdsiSqlFromCapr = rendered$ohdiSQL,
                                             templateType = !!templateType,
+                                            templateTypeAbbreviation = !!templateTypeAbbreviation,
+                                            dateRange = dateRange[[j]],
                                             conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
-                                            conceptSetName = conceptSetSignature$conceptSetExpressionName[i])
+                                            conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
+                                            logicDescription = !!logicDescription)
     } else {
       ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ", conceptSetSignature$referentConceptName[i]))
     }
@@ -167,6 +177,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     }
     
     templateType <- 'template2'
+    templateTypeAbbreviation <- paste0('T2', dateRange[[j]])
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,
                                            cdmSchema = "@cdm_database_schema", #change me
@@ -183,15 +194,23 @@ for (i in (1:nrow(conceptSetSignature))) {
     if (length(rendered) == 3) {
       counter <- counter + 1
       circeJson = rendered$circeJson %>% RJSONIO::fromJSON(digits = 23) %>% RJSONIO::toJSON(digits = 23, pretty = TRUE)
+      logicDescription <- paste0(templateTypeAbbreviation, 
+                                 " ",
+                                 stringr::str_replace(string = logicDescriptionTemplate,
+                                                      pattern = 'TEMPLATETEMPLATE', 
+                                                      replacement = conceptSetSignature$conceptSetExpressionName[i]))
       cohortTemplate2[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
                                             cohortCirceJsonFromCapr = circeJson,
                                             cohortHumanReadable = rendered$cohortRead,
                                             cohortOhdsiSqlFromCapr = rendered$ohdiSQL,
                                             templateType = !!templateType,
+                                            templateTypeAbbreviation = !!templateTypeAbbreviation,
+                                            dateRange = dateRange[[j]],
                                             conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
-                                            conceptSetName = conceptSetSignature$conceptSetExpressionName[i])
+                                            conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
+                                            logicDescription = !!logicDescription)
     } else {
       ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
     }
@@ -228,6 +247,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     }
     
     templateType <- 'template3'
+    templateTypeAbbreviation <- paste0('T3', dateRange[[j]])
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,
                                            cdmSchema = "@cdm_database_schema", #change me
@@ -243,15 +263,23 @@ for (i in (1:nrow(conceptSetSignature))) {
     if (length(rendered) == 3) {
       counter <- counter + 1
       circeJson = rendered$circeJson %>% RJSONIO::fromJSON(digits = 23) %>% RJSONIO::toJSON(digits = 23, pretty = TRUE)
+      logicDescription <- paste0(templateTypeAbbreviation, 
+                                 " ",
+                                 stringr::str_replace(string = logicDescriptionTemplate,
+                                                      pattern = 'TEMPLATETEMPLATE', 
+                                                      replacement = conceptSetSignature$conceptSetExpressionName[i]))
       cohortTemplate3[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
                                             cohortCirceJsonFromCapr = circeJson,
                                             cohortHumanReadable = rendered$cohortRead,
                                             cohortOhdsiSqlFromCapr = rendered$ohdiSQL,
                                             templateType = !!templateType,
+                                            templateTypeAbbreviation = !!templateTypeAbbreviation,
+                                            dateRange = dateRange[[j]],
                                             conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
-                                            conceptSetName = conceptSetSignature$conceptSetExpressionName[i])
+                                            conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
+                                            logicDescription = !!logicDescription)
     } else {
       ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
     }
@@ -287,6 +315,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     }
     
     templateType <- 'template4'
+    templateTypeAbbreviation <- paste0('T4', dateRange[[j]])
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,
                                            cdmSchema = "@cdm_database_schema", #change me
@@ -302,15 +331,23 @@ for (i in (1:nrow(conceptSetSignature))) {
     if (length(rendered) == 3) {
       counter <- counter + 1
       circeJson = rendered$circeJson %>% RJSONIO::fromJSON(digits = 23) %>% RJSONIO::toJSON(digits = 23, pretty = TRUE)
+      logicDescription <- paste0(templateTypeAbbreviation, 
+                                 " ",
+                                 stringr::str_replace(string = logicDescriptionTemplate,
+                                                      pattern = 'TEMPLATETEMPLATE', 
+                                                      replacement = conceptSetSignature$conceptSetExpressionName[i]))
       cohortTemplate4[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
                                             cohortCirceJsonFromCapr = circeJson,
                                             cohortHumanReadable = rendered$cohortRead,
                                             cohortOhdsiSqlFromCapr = rendered$ohdiSQL,
                                             templateType = !!templateType,
+                                            templateTypeAbbreviation = !!templateTypeAbbreviation,
+                                            dateRange = dateRange[[j]],
                                             conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
-                                            conceptSetName = conceptSetSignature$conceptSetExpressionName[i])
+                                            conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
+                                            logicDescription = !!logicDescription)
     } else {
       ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
     }
