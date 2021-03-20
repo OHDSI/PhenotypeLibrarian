@@ -1,6 +1,6 @@
 library(magrittr)
 projectFolder <- rstudioapi::getActiveProject()
-cohortDefinitions <- readRDS(file.path(projectFolder, "inst", "Cohorts", "Cohorts20210319.rds")) %>% 
+cohortDefinitions <- readRDS(file.path(rstudioapi::getActiveProject(), 'inst', 'Cohorts', paste0('Cohorts', todaysDate  , '.rds'))) %>% 
   dplyr::tibble() %>% 
   dplyr::arrange(.data$cohortId)
 

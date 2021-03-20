@@ -93,6 +93,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     logicDescriptionTemplate <- paste0("All events of ", 
                                        "TEMPLATETEMPLATE",
                                        " with no such events in prior clean window period (365 days). No continuous observation period requirement. Persons exit the cohort on start_date + 1day.")
+    cohortName <- "TEMPLATETEMPLATE all events with prior clean period"
     
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
@@ -107,7 +108,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     }
     
     templateType <- 'template1'
-    templateTypeAbbreviation <- paste0('T1', dateRange[[j]])
+    templateTypeAbbreviation <- paste('T1', toupper(dateRange[[j]]), sep = " ")
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,
                                            cdmSchema = "@cdm_database_schema", #change me
@@ -128,6 +129,15 @@ for (i in (1:nrow(conceptSetSignature))) {
                                  stringr::str_replace(string = logicDescriptionTemplate,
                                                pattern = 'TEMPLATETEMPLATE', 
                                                replacement = conceptSetSignature$conceptSetExpressionName[i]))
+      cohortName <- paste0('[PL ',
+                           counter,
+                           ']',
+                           '-',
+                           templateTypeAbbreviation, 
+                           ' ',
+                           stringr::str_replace(string = cohortName,
+                                                pattern = 'TEMPLATETEMPLATE', 
+                                                replacement = conceptSetSignature$referentConceptName[i]))
       
       cohortTemplate1[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
@@ -140,8 +150,10 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
                                             conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
-                                            logicDescription = !!logicDescription)
+                                            logicDescription = !!logicDescription,
+                                            cohortName = !!cohortName)
     } else {
+      counter <- counter + 1
       ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ", conceptSetSignature$referentConceptName[i]))
     }
   }
@@ -163,6 +175,7 @@ for (i in (1:nrow(conceptSetSignature))) {
                                        "TEMPLATETEMPLATE",
                                        " with overlapping inpatient visit",
                                        " with no such events in prior clean window period (365 days). No continuous observation period requirement. Persons exit the cohort on start_date + 1day.")
+    cohortName <- "TEMPLATETEMPLATE all events with overlapping inpatient visit and prior clean period"
     
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
@@ -177,7 +190,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     }
     
     templateType <- 'template2'
-    templateTypeAbbreviation <- paste0('T2', dateRange[[j]])
+    templateTypeAbbreviation <- paste('T2', toupper(dateRange[[j]]), sep = " ")
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,
                                            cdmSchema = "@cdm_database_schema", #change me
@@ -199,6 +212,16 @@ for (i in (1:nrow(conceptSetSignature))) {
                                  stringr::str_replace(string = logicDescriptionTemplate,
                                                       pattern = 'TEMPLATETEMPLATE', 
                                                       replacement = conceptSetSignature$conceptSetExpressionName[i]))
+      cohortName <- paste0('[PL ',
+                           counter,
+                           ']',
+                           '-',
+                           templateTypeAbbreviation, 
+                           ' ',
+                           stringr::str_replace(string = cohortName,
+                                                pattern = 'TEMPLATETEMPLATE', 
+                                                replacement = conceptSetSignature$referentConceptName[i]))
+      
       cohortTemplate2[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
                                             cohortCirceJsonFromCapr = circeJson,
@@ -210,8 +233,10 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
                                             conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
-                                            logicDescription = !!logicDescription)
+                                            logicDescription = !!logicDescription,
+                                            cohortName = !!cohortName)
     } else {
+      counter <- counter + 1
       ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
     }
   }
@@ -233,6 +258,7 @@ for (i in (1:nrow(conceptSetSignature))) {
                                        " event, first time in persons history",
                                        " with minimum prior observation period of 365 days.",
                                        " Persons are followed up till end of Observation period.")
+    cohortName <- "TEMPLATETEMPLATE first time in history with 365 days minimum prior observation"
     
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
@@ -247,7 +273,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     }
     
     templateType <- 'template3'
-    templateTypeAbbreviation <- paste0('T3', dateRange[[j]])
+    templateTypeAbbreviation <- paste('T3', toupper(dateRange[[j]]), sep = " ")
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,
                                            cdmSchema = "@cdm_database_schema", #change me
@@ -268,6 +294,16 @@ for (i in (1:nrow(conceptSetSignature))) {
                                  stringr::str_replace(string = logicDescriptionTemplate,
                                                       pattern = 'TEMPLATETEMPLATE', 
                                                       replacement = conceptSetSignature$conceptSetExpressionName[i]))
+      cohortName <- paste0('[PL ',
+                           counter,
+                           ']',
+                           '-',
+                           templateTypeAbbreviation, 
+                           ' ',
+                           stringr::str_replace(string = cohortName,
+                                                pattern = 'TEMPLATETEMPLATE', 
+                                                replacement = conceptSetSignature$referentConceptName[i]))
+      
       cohortTemplate3[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
                                             cohortCirceJsonFromCapr = circeJson,
@@ -279,8 +315,10 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
                                             conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
-                                            logicDescription = !!logicDescription)
+                                            logicDescription = !!logicDescription,
+                                            cohortName = !!cohortName)
     } else {
+      counter <- counter + 1
       ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
     }
   }
@@ -301,6 +339,7 @@ for (i in (1:nrow(conceptSetSignature))) {
                                        " event, first time in persons history",
                                        " no prior minimum observation period requirement.",
                                        " Persons are followed up till end of Observation period.")
+    cohortName <- "TEMPLATETEMPLATE first time in history"
     
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
@@ -315,7 +354,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     }
     
     templateType <- 'template4'
-    templateTypeAbbreviation <- paste0('T4', dateRange[[j]])
+    templateTypeAbbreviation <- paste('T4', toupper(dateRange[[j]]), sep = " ")
     genOp <- CirceR::createGenerateOptions(cohortIdFieldName = "cohort_definition_id", #change me
                                            cohortId = counter,
                                            cdmSchema = "@cdm_database_schema", #change me
@@ -336,6 +375,16 @@ for (i in (1:nrow(conceptSetSignature))) {
                                  stringr::str_replace(string = logicDescriptionTemplate,
                                                       pattern = 'TEMPLATETEMPLATE', 
                                                       replacement = conceptSetSignature$conceptSetExpressionName[i]))
+      cohortName <- paste0('[PL ',
+                           counter,
+                           ']',
+                           '-',
+                           templateTypeAbbreviation, 
+                           ' ',
+                           stringr::str_replace(string = cohortName,
+                                                pattern = 'TEMPLATETEMPLATE', 
+                                                replacement = conceptSetSignature$referentConceptName[i]))
+      
       cohortTemplate4[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
                                             cohortCirceJsonFromCapr = circeJson,
@@ -347,8 +396,10 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
                                             conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
-                                            logicDescription = !!logicDescription)
+                                            logicDescription = !!logicDescription,
+                                            cohortName = !!cohortName)
     } else {
+      counter <- counter + 1
       ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
     }
   }
