@@ -2,6 +2,9 @@
 # Create Cohorts from templates
 ##############################
 
+todaysDate <- stringr::str_replace_all(string = lubridate::as_date(lubridate::now()), 
+                                       pattern = stringr::fixed("-"), 
+                                       replacement = "") 
 library(PhenotypeLibrarian)
 conceptSetSignature <- readRDS(
   file = file.path(
@@ -87,12 +90,20 @@ cohortTemplate1 <- list()
 for (i in (1:nrow(conceptSetSignature))) {
   for (j in (1:length(dateRange))) {
     
+    logicDescriptionTemplate <- paste0("All events of ", 
+                                       "TEMPLATETEMPLATE",
+                                       " with no such events in prior clean window period (365 days). No continuous observation period requirement. Persons exit the cohort on start_date + 1day.")
+    
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
     } else if (dateRange[[j]] == 'icd9') {
       occurrenceStartDateAttribute <- dateAttributeStartDateBeforeICD10
+      logicDescriptionTemplate <- paste0(logicDescriptionTemplate, 
+                                         " Index date is limited to ICD9CM period of on or before 2015-09-30.")
     } else if (dateRange[[j]] == 'icd10') {
       occurrenceStartDateAttribute <- dateAttributeStartDateAfterICD10
+      logicDescriptionTemplate <- paste0(logicDescriptionTemplate, 
+                                         " Index date is limited to ICD10CM period of on or after 2015-10-01.")
     }
     
     templateType <- 'template1'
@@ -111,7 +122,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     if (length(rendered) == 3) {
       counter <- counter + 1
       circeJson = rendered$circeJson %>% RJSONIO::fromJSON(digits = 23) %>% RJSONIO::toJSON(digits = 23, pretty = TRUE)
-      cohortTemplate1[[i]] <- dplyr::tibble(cohortId = counter,
+      cohortTemplate1[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
                                             cohortCirceJsonFromCapr = circeJson,
                                             cohortHumanReadable = rendered$cohortRead,
@@ -121,7 +132,7 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
                                             conceptSetName = conceptSetSignature$conceptSetExpressionName[i])
     } else {
-      ParallelLogger::logWarn(paste0("Skipping over ", i, " ", conceptSetSignature$referentConceptName[i]))
+      ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ", conceptSetSignature$referentConceptName[i]))
     }
   }
 }
@@ -138,12 +149,21 @@ cohortTemplate2 <- list()
 for (i in (1:nrow(conceptSetSignature))) {
   for (j in (1:length(dateRange))) {
     
+    logicDescriptionTemplate <- paste0("All events of ", 
+                                       "TEMPLATETEMPLATE",
+                                       " with overlapping inpatient visit",
+                                       " with no such events in prior clean window period (365 days). No continuous observation period requirement. Persons exit the cohort on start_date + 1day.")
+    
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
     } else if (dateRange[[j]] == 'icd9') {
       occurrenceStartDateAttribute <- dateAttributeStartDateBeforeICD10
+      logicDescriptionTemplate <- paste0(logicDescriptionTemplate, 
+                                         " Index date is limited to ICD9CM period of on or before 2015-09-30.")
     } else if (dateRange[[j]] == 'icd10') {
       occurrenceStartDateAttribute <- dateAttributeStartDateAfterICD10
+      logicDescriptionTemplate <- paste0(logicDescriptionTemplate, 
+                                         " Index date is limited to ICD10CM period of on or after 2015-10-01.")
     }
     
     templateType <- 'template2'
@@ -163,7 +183,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     if (length(rendered) == 3) {
       counter <- counter + 1
       circeJson = rendered$circeJson %>% RJSONIO::fromJSON(digits = 23) %>% RJSONIO::toJSON(digits = 23, pretty = TRUE)
-      cohortTemplate2[[i]] <- dplyr::tibble(cohortId = counter,
+      cohortTemplate2[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
                                             cohortCirceJsonFromCapr = circeJson,
                                             cohortHumanReadable = rendered$cohortRead,
@@ -173,7 +193,7 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
                                             conceptSetName = conceptSetSignature$conceptSetExpressionName[i])
     } else {
-      ParallelLogger::logWarn(paste0("Skipping over ", i, " ",  conceptSetSignature$referentConceptName[i]))
+      ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
     }
   }
 }
@@ -189,12 +209,22 @@ cohortTemplate3 <- list()
 for (i in (1:nrow(conceptSetSignature))) {
   for (j in (1:length(dateRange))) {
     
+    logicDescriptionTemplate <- paste0("First occurrence of ", 
+                                       "TEMPLATETEMPLATE",
+                                       " event, first time in persons history",
+                                       " with minimum prior observation period of 365 days.",
+                                       " Persons are followed up till end of Observation period.")
+    
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
     } else if (dateRange[[j]] == 'icd9') {
       occurrenceStartDateAttribute <- dateAttributeStartDateBeforeICD10
+      logicDescriptionTemplate <- paste0(logicDescriptionTemplate, 
+                                         " Index date is limited to ICD9CM period of on or before 2015-09-30.")
     } else if (dateRange[[j]] == 'icd10') {
       occurrenceStartDateAttribute <- dateAttributeStartDateAfterICD10
+      logicDescriptionTemplate <- paste0(logicDescriptionTemplate, 
+                                         " Index date is limited to ICD10CM period of on or after 2015-10-01.")
     }
     
     templateType <- 'template3'
@@ -213,7 +243,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     if (length(rendered) == 3) {
       counter <- counter + 1
       circeJson = rendered$circeJson %>% RJSONIO::fromJSON(digits = 23) %>% RJSONIO::toJSON(digits = 23, pretty = TRUE)
-      cohortTemplate3[[i]] <- dplyr::tibble(cohortId = counter,
+      cohortTemplate3[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
                                             cohortCirceJsonFromCapr = circeJson,
                                             cohortHumanReadable = rendered$cohortRead,
@@ -223,7 +253,7 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
                                             conceptSetName = conceptSetSignature$conceptSetExpressionName[i])
     } else {
-      ParallelLogger::logWarn(paste0("Skipping over ", i, " ",  conceptSetSignature$referentConceptName[i]))
+      ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
     }
   }
 }
@@ -238,12 +268,22 @@ cohortTemplate4 <- list()
 for (i in (1:nrow(conceptSetSignature))) {
   for (j in (1:length(dateRange))) {
     
+    logicDescriptionTemplate <- paste0("First occurrence of ", 
+                                       "TEMPLATETEMPLATE",
+                                       " event, first time in persons history",
+                                       " no prior minimum observation period requirement.",
+                                       " Persons are followed up till end of Observation period.")
+    
     if (dateRange[[j]] == 'all') {
       occurrenceStartDateAttribute <- NULL
     } else if (dateRange[[j]] == 'icd9') {
       occurrenceStartDateAttribute <- dateAttributeStartDateBeforeICD10
+      logicDescriptionTemplate <- paste0(logicDescriptionTemplate, 
+                                         " Index date is limited to ICD9CM period of on or before 2015-09-30.")
     } else if (dateRange[[j]] == 'icd10') {
       occurrenceStartDateAttribute <- dateAttributeStartDateAfterICD10
+      logicDescriptionTemplate <- paste0(logicDescriptionTemplate, 
+                                         " Index date is limited to ICD10CM period of on or after 2015-10-01.")
     }
     
     templateType <- 'template4'
@@ -262,7 +302,7 @@ for (i in (1:nrow(conceptSetSignature))) {
     if (length(rendered) == 3) {
       counter <- counter + 1
       circeJson = rendered$circeJson %>% RJSONIO::fromJSON(digits = 23) %>% RJSONIO::toJSON(digits = 23, pretty = TRUE)
-      cohortTemplate4[[4]] <- dplyr::tibble(cohortId = counter,
+      cohortTemplate4[[counter]] <- dplyr::tibble(cohortId = counter,
                                             conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
                                             cohortCirceJsonFromCapr = circeJson,
                                             cohortHumanReadable = rendered$cohortRead,
@@ -272,7 +312,7 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             conceptSetReferentName = conceptSetSignature$referentConceptName[i],
                                             conceptSetName = conceptSetSignature$conceptSetExpressionName[i])
     } else {
-      ParallelLogger::logWarn(paste0("Skipping over ", i, " ",  conceptSetSignature$referentConceptName[i]))
+      ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
     }
   }
 }
@@ -283,7 +323,7 @@ cohortTemplate <- dplyr::bind_rows(cohortTemplate1, cohortTemplate2, cohortTempl
 
 
 saveRDS(object = cohortTemplate,
-        file.path(rstudioapi::getActiveProject(), 'inst', 'CohortTemplates', 'Cohorts20210306.rds'))
+        file.path(rstudioapi::getActiveProject(), 'inst', 'CohortTemplates', paste0('Cohorts', todaysDate  , '.rds')))
 
 
 
@@ -305,6 +345,6 @@ data <- dplyr::bind_rows(data) %>%
   dplyr::arrange(.data$cohortId)
 
 saveRDS(object = data,
-        file.path(rstudioapi::getActiveProject(), 'inst', 'Cohorts', 'Cohorts20210315.rds'))
+        file.path(rstudioapi::getActiveProject(), 'inst', 'Cohorts', paste0('Cohorts', todaysDate  , '.rds')))
 
 
