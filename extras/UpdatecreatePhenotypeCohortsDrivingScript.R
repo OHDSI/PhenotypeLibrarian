@@ -1,3 +1,5 @@
+library(magrittr)
+projectFolder <- rstudioapi::getActiveProject()
 ####################
 # Create Cohorts from templates
 ##############################
@@ -79,6 +81,7 @@ dateRange <- c('all', 'icd9', 'icd10')
 #Create Phenotypes
 #######################################################
 counter <- 0
+rejectedConceptSets <- list()
 
 ########################
 # Template 1
@@ -134,7 +137,7 @@ for (i in (1:nrow(conceptSetSignature))) {
                            ']',
                            '-',
                            templateTypeAbbreviation, 
-                           ' ',
+                           '-',
                            stringr::str_replace(string = cohortName,
                                                 pattern = 'TEMPLATETEMPLATE', 
                                                 replacement = conceptSetSignature$referentConceptName[i]))
@@ -154,7 +157,17 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             cohortName = !!cohortName)
     } else {
       counter <- counter + 1
-      ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ", conceptSetSignature$referentConceptName[i]))
+      ParallelLogger::logWarn(paste0("Rejecting cohort id: ", counter, " ", conceptSetSignature$conceptSetExpressionName[i]))
+      rejectedConceptSets[[counter]] <- dplyr::tibble(cohortId = counter,
+                                                      conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
+                                                      templateType = !!templateType,
+                                                      templateTypeAbbreviation = !!templateTypeAbbreviation,
+                                                      dateRange = dateRange[[j]],
+                                                      conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
+                                                      conceptSetReferentName = conceptSetSignature$referentConceptName[i],
+                                                      conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
+                                                      logicDescription = !!logicDescription,
+                                                      cohortName = !!cohortName)
     }
   }
 }
@@ -217,7 +230,7 @@ for (i in (1:nrow(conceptSetSignature))) {
                            ']',
                            '-',
                            templateTypeAbbreviation, 
-                           ' ',
+                           '-',
                            stringr::str_replace(string = cohortName,
                                                 pattern = 'TEMPLATETEMPLATE', 
                                                 replacement = conceptSetSignature$referentConceptName[i]))
@@ -237,7 +250,17 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             cohortName = !!cohortName)
     } else {
       counter <- counter + 1
-      ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
+      ParallelLogger::logWarn(paste0("Rejecting cohort id: ", counter, " ",  conceptSetSignature$conceptSetExpressionName[i]))
+      rejectedConceptSets[[counter]] <- dplyr::tibble(cohortId = counter,
+                                                      conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
+                                                      templateType = !!templateType,
+                                                      templateTypeAbbreviation = !!templateTypeAbbreviation,
+                                                      dateRange = dateRange[[j]],
+                                                      conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
+                                                      conceptSetReferentName = conceptSetSignature$referentConceptName[i],
+                                                      conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
+                                                      logicDescription = !!logicDescription,
+                                                      cohortName = !!cohortName)
     }
   }
 }
@@ -299,7 +322,7 @@ for (i in (1:nrow(conceptSetSignature))) {
                            ']',
                            '-',
                            templateTypeAbbreviation, 
-                           ' ',
+                           '-',
                            stringr::str_replace(string = cohortName,
                                                 pattern = 'TEMPLATETEMPLATE', 
                                                 replacement = conceptSetSignature$referentConceptName[i]))
@@ -319,7 +342,17 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             cohortName = !!cohortName)
     } else {
       counter <- counter + 1
-      ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
+      ParallelLogger::logWarn(paste0("Rejecting cohort id: ", counter, " ",  conceptSetSignature$conceptSetExpressionName[i]))
+      rejectedConceptSets[[counter]] <- dplyr::tibble(cohortId = counter,
+                                                      conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
+                                                      templateType = !!templateType,
+                                                      templateTypeAbbreviation = !!templateTypeAbbreviation,
+                                                      dateRange = dateRange[[j]],
+                                                      conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
+                                                      conceptSetReferentName = conceptSetSignature$referentConceptName[i],
+                                                      conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
+                                                      logicDescription = !!logicDescription,
+                                                      cohortName = !!cohortName)
     }
   }
 }
@@ -380,7 +413,7 @@ for (i in (1:nrow(conceptSetSignature))) {
                            ']',
                            '-',
                            templateTypeAbbreviation, 
-                           ' ',
+                           '-',
                            stringr::str_replace(string = cohortName,
                                                 pattern = 'TEMPLATETEMPLATE', 
                                                 replacement = conceptSetSignature$referentConceptName[i]))
@@ -400,20 +433,32 @@ for (i in (1:nrow(conceptSetSignature))) {
                                             cohortName = !!cohortName)
     } else {
       counter <- counter + 1
-      ParallelLogger::logWarn(paste0("Skipping over cohort id: ", counter, " ",  conceptSetSignature$referentConceptName[i]))
+      ParallelLogger::logWarn(paste0("Rejecting cohort id: ", counter, " ",  conceptSetSignature$conceptSetExpressionName[i]))
+      rejectedConceptSets[[counter]] <- dplyr::tibble(cohortId = counter,
+                                                      conceptSetUniqueId = conceptSetSignature$conceptSetUniqueId[i],
+                                                      templateType = !!templateType,
+                                                      templateTypeAbbreviation = !!templateTypeAbbreviation,
+                                                      dateRange = dateRange[[j]],
+                                                      conceptSetReferentConceptId = conceptSetSignature$referentConceptId[i],
+                                                      conceptSetReferentName = conceptSetSignature$referentConceptName[i],
+                                                      conceptSetName = conceptSetSignature$conceptSetExpressionName[i],
+                                                      logicDescription = !!logicDescription,
+                                                      cohortName = !!cohortName)
     }
   }
 }
 cohortTemplate4 <- dplyr::bind_rows(cohortTemplate4)
 
+
 cohortTemplate <- dplyr::bind_rows(cohortTemplate1, cohortTemplate2, cohortTemplate3, cohortTemplate4) %>%
   dplyr::arrange(.data$cohortId)
 
+rejectedConceptSets <- dplyr::bind_rows(rejectedConceptSets)
 
 saveRDS(object = cohortTemplate,
-        file.path(rstudioapi::getActiveProject(), 'inst', 'CohortTemplates', paste0('Cohorts', todaysDate  , '.rds')))
-
-
+        file = file.path(rstudioapi::getActiveProject(), 'inst', 'Cohorts', paste0('Cohorts', todaysDate  , '.rds')))
+saveRDS(object = rejectedConceptSets,
+        file = file.path(rstudioapi::getActiveProject(), 'inst', 'Cohorts', paste0('Rejected', todaysDate  , '.rds')))
 
 baseUrl <- Sys.getenv('BaseUrl')
 
