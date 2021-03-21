@@ -14,12 +14,7 @@ postDefinitionForReview <- function(conceptSetUniqueId,
   post <- list()
   for (i in (1:nrow(data))) {
     datum <- data[i,]
-    post[[i]] <- ROhdsiWebApi::postCohortDefinition(name = paste0("[PL ", 
-                                                                  datum$cohortId, 
-                                                                  "] ", 
-                                                                  datum$templateType, 
-                                                                  " ",
-                                                                  datum$conceptSetName),
+    post[[i]] <- ROhdsiWebApi::postCohortDefinition(name = datum$cohortName,
                                                     cohortDefinition = RJSONIO::fromJSON(datum$cohortCirceJsonFromCapr, 
                                                                                          digits = 23), 
                                                     baseUrl = baseUrl)
