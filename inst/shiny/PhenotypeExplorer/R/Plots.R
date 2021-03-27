@@ -648,18 +648,6 @@ plotTemporalCohortComparison <- function(balance,
     return(NULL)
   }
   
-  # balance <- balance %>%
-  #   addShortName(
-  #     shortNameRef = shortNameRef,
-  #     cohortIdColumn = "cohortId1",
-  #     shortNameColumn = "shortName1"
-  #   ) %>%
-  #   addShortName(
-  #     shortNameRef = shortNameRef,
-  #     cohortIdColumn = "cohortId2",
-  #     shortNameColumn = "shortName2"
-  #   )
-  
   balance$tooltip <- c(
     paste(
       "Database: ",

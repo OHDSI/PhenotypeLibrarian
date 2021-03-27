@@ -1,5 +1,11 @@
 library(magrittr)
-appVersion <- "V 1.0"
+
+assign(x = "appVersion",value = paste0("V 2.0", "  (",
+                                       lubridate::now(tzone = "EST"),
+                                       " EST)"), envir = .GlobalEnv)
+assign(x = "appSignatureValue",
+       value = Sys.getenv("PhenotypeLibrarianAppSignatureValue"), 
+       envir = .GlobalEnv)
 
 assign("username", Sys.getenv("charybdisdbUser"), envir = .GlobalEnv)
 assign("password", Sys.getenv("charybdisdbPw"), envir = .GlobalEnv)
@@ -11,6 +17,9 @@ assign("server", paste(Sys.getenv("shinydbServer"),
 assign("vocabularyDatabaseSchema",
        'vocabulary',
        envir = .GlobalEnv)
+# assign("resultsDatabaseSchema",
+#        'aesi20210324',
+#        envir = .GlobalEnv)
 assign("resultsDatabaseSchema",
        'eunomia',
        envir = .GlobalEnv)
@@ -24,8 +33,8 @@ source("R/DataPulls.R")
 source("R/Connections.R")
 source("R/HelperFunctions.R")
 source("R/ModifyDataSource.R")
+source("R/AnnotationService.R")
 
-googlesheets4::gs4_auth(path = Sys.getenv('PhenotypeLibrarianAuthorizationJson'))
 assign(x = "dbms", value = "postgresql", envir = .GlobalEnv)
 assign(x = "port", value = 5432, envir = .GlobalEnv)
 
@@ -42,6 +51,25 @@ dataModelSpecifications <-
     guess_max = min(1e7)
   )
 suppressWarnings(rm(list = snakeCaseToCamelCase(dataModelSpecifications$tableName)))
+
+userPriorityFile <- readr::read_csv(file = 'UserPriorityFile.csv',
+                                col_types = readr::cols())
+
+
+assign(x = "annotationPermission",
+       value = Sys.getenv("PhenotypeLibrarianAnnoationPermission"), 
+       envir = .GlobalEnv)
+assign(x = "annotationService",
+       value = Sys.getenv("PhenotypeLibrarianAnnoationServiceProvider"), 
+       envir = .GlobalEnv)
+
+
+
+if (annotationService == "GoogleSheets") {
+  # get service account authorization token
+  googlesheets4::gs4_auth(path = Sys.getenv('PhenotypeLibrarianAuthorizationJson'))
+}
+
 
 # connection to database
 connectionDetails <-

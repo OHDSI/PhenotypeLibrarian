@@ -121,33 +121,6 @@ sidebarMenu <-
           h5(appVersion)
       )
     )
-    # if (exists(x = "phenotypeDescription"))
-      # shinydashboard::menuItem(text = "Phenotype Description", tabName = "phenotypeDescription"),
-    # if (exists(x = "cohort"))
-      # shinydashboard::menuItem(text = "Cohort Definition", tabName = "cohortDefinition"),
-    
-    
-    # if (exists(x = "includedSourceConcept"))
-    #   addInfo(
-    #     item = shinydashboard::menuItem(text = "Included (Source) Concepts", tabName = "includedConcepts"),
-    #     infoId = "includedConceptsInfo"
-    #   ),
-    # if (exists(x = "orphanConcept"))
-    #   addInfo(
-    #     item = shinydashboard::menuItem(text = "Orphan (Source) Concepts", tabName = "orphanConcepts"),
-    #     infoId = "orphanConceptsInfo"
-    #   ),
-    # if (exists(x = "recommenderSet"))
-    #   addInfo(
-    #     item = shinydashboard::menuItem(text = "Concept Set Diagnostics MOVE TO COHORTS", tabName = "conceptSetDiagnostics"),
-    #     infoId = "conceptSetDiagnosticsInfo"
-    #   ),
-    # if (exists(x = "covariateValue"))
-    #   addInfo(
-    #     item = shinydashboard::menuItem(text = "Compare Cohort Char.", tabName = "compareCohortCharacterization"),
-    #     infoId = "compareCohortCharacterizationInfo"
-    #   ),
-    
   )
 
 #Side bar code
@@ -278,9 +251,9 @@ bodyTabItems <- shinydashboard::tabItems(
         12,
         tags$hr(),
         shinydashboard::box(
-          title = "Phenotype notes (testing only):",
+          title = paste0("Notes from the ", appSignatureValue, " library", " (testing only):"),
           collapsible = TRUE,
-          collapsed = FALSE,
+          collapsed = TRUE,
           width = NULL,
           uiOutput("searchCommentResults")
         ),
@@ -289,6 +262,8 @@ bodyTabItems <- shinydashboard::tabItems(
           collapsible = TRUE,
           collapsed = TRUE,
           width = NULL,
+          column(12,
+          column(4,
           shinyWidgets::pickerInput(
             inputId = "selectedCohortIdsForSearch",
             label = "Cohort IDs :",
@@ -296,6 +271,25 @@ bodyTabItems <- shinydashboard::tabItems(
             multiple = TRUE,
             width = 300,
             options = shinyWidgetsPickerOptions
+          ))
+          # ,
+          # column(4,
+          #        shiny::textInput(inputId = "searchUsername",
+          #                         label = "Username (Optional)",
+          #                         value = "Anonymous",
+          #                         width = NULL)
+          #        )
+          # ,
+          # column(4,
+          #        shiny::conditionalPanel(
+          #          condition = "input.searchUsername != 'Anonymous' && input.searchUsername != ''",
+          #          shiny::passwordInput(
+          #            inputId = "searchPassword",
+          #            label = "Password (Optional)",
+          #            width = NULL
+          #          )
+          #        )
+          # )
           ),
           markdownInput::markdownInput(
             inputId = "searchComment",
@@ -326,32 +320,6 @@ bodyTabItems <- shinydashboard::tabItems(
   shinydashboard::tabItem(tabName = "about",
                           if (exists(x = "aboutText"))
                             HTML(aboutText)),
-  # shinydashboard::tabItem(
-  #   tabName = "phenotypeDescription",
-  #   shinydashboard::box(
-  #     title = "Phenotype Description",
-  #     width = NULL,
-  #     status = "primary",
-  #     DT::DTOutput(outputId = "phenoTypeDescriptionTable"),
-  #     
-  #     shiny::conditionalPanel(
-  #       condition = "output.phenotypeRowIsSelected == true",
-  #       shiny::actionButton("selectPhenotypeButton", label = "Select this phenotype", style = "margin-top: 5px; margin-bottom: 5px;"),
-  #       
-  #     )
-  #   )
-  # ),
-  # shinydashboard::tabItem(
-  #   tabName = "cohortDefinition",
-  #   shinydashboard::box(
-  #     title = "Cohort Definition",
-  #     width = NULL,
-  #     status = "primary",
-  #     DT::DTOutput(outputId = "cohortDefinitionTable"),
-  # 
-  #     
-  #   )
-  # ),
   shinydashboard::tabItem(
     tabName = "conceptSetDiagnostics",
     cohortReference("conceptSetDiagnosticsSelectedCohort"),
@@ -389,7 +357,7 @@ bodyTabItems <- shinydashboard::tabItems(
     shinydashboard::box(
       title = "Phenotype notes:",
       collapsible = TRUE,
-      collapsed = FALSE,
+      collapsed = TRUE,
       width = NULL,
       uiOutput("cohortCountsCommentResults")
     ),
@@ -398,6 +366,7 @@ bodyTabItems <- shinydashboard::tabItems(
       collapsible = TRUE,
       collapsed = TRUE,
       width = NULL,
+      column(4,
       shinyWidgets::pickerInput(
         inputId = "selectedCohortIdsForCohortCounts",
         label = "Cohort IDs :",
@@ -405,7 +374,16 @@ bodyTabItems <- shinydashboard::tabItems(
         multiple = TRUE,
         width = 300,
         options = shinyWidgetsPickerOptions
-      ),
+      )),
+      column(8,
+      shinyWidgets::pickerInput(
+        inputId = "selectedDatabaseIdsForCohortCounts",
+        label = "Database IDs :",
+        choices = NULL,
+        multiple = TRUE,
+        width = 300,
+        options = shinyWidgetsPickerOptions
+      )),
       markdownInput::markdownInput(
         inputId = "cohortCountsComment",
         label = "Notes:",
@@ -509,7 +487,7 @@ bodyTabItems <- shinydashboard::tabItems(
     shinydashboard::box(
       title = "Phenotype notes:",
       collapsible = TRUE,
-      collapsed = FALSE,
+      collapsed = TRUE,
       width = NULL,
       uiOutput("incidenceRateCommentResults")
     ),
@@ -518,6 +496,7 @@ bodyTabItems <- shinydashboard::tabItems(
       collapsible = TRUE,
       collapsed = TRUE,
       width = NULL,
+      column(4,
       shinyWidgets::pickerInput(
         inputId = "selectedCohortIdsForIncidenceRate",
         label = "Cohort IDs :",
@@ -525,7 +504,16 @@ bodyTabItems <- shinydashboard::tabItems(
         multiple = TRUE,
         width = 300,
         options = shinyWidgetsPickerOptions
-      ),
+      )),
+      column(8,
+      shinyWidgets::pickerInput(
+        inputId = "selectedDatabaseIdsForIncidenceRate",
+        label = "Database IDs :",
+        choices = NULL,
+        multiple = TRUE,
+        width = 300,
+        options = shinyWidgetsPickerOptions
+      )),
       markdownInput::markdownInput(
         inputId = "incidenceRateComment",
         label = "Notes:",
@@ -573,7 +561,7 @@ bodyTabItems <- shinydashboard::tabItems(
     shinydashboard::box(
       title = "Phenotype notes:",
       collapsible = TRUE,
-      collapsed = FALSE,
+      collapsed = TRUE,
       width = NULL,
       uiOutput("timeDistributionCommentResults")
     ),
@@ -582,6 +570,7 @@ bodyTabItems <- shinydashboard::tabItems(
       collapsible = TRUE,
       collapsed = TRUE,
       width = NULL,
+      column(4,
       shinyWidgets::pickerInput(
         inputId = "selectedCohortIdsForTimeDistribution",
         label = "Cohort IDs :",
@@ -589,7 +578,16 @@ bodyTabItems <- shinydashboard::tabItems(
         multiple = TRUE,
         width = 300,
         options = shinyWidgetsPickerOptions
-      ),
+      )),
+      column(8,
+      shinyWidgets::pickerInput(
+        inputId = "selectedDatabaseIdsForTimeDistribution",
+        label = "Database IDs :",
+        choices = NULL,
+        multiple = TRUE,
+        width = 300,
+        options = shinyWidgetsPickerOptions
+      )),
       markdownInput::markdownInput(
         inputId = "timeDistributionComment",
         label = "Notes:",
@@ -611,30 +609,6 @@ bodyTabItems <- shinydashboard::tabItems(
              ")
     )
   ),
-  # shinydashboard::tabItem(
-  #   tabName = "includedConcepts",
-  #   shiny::radioButtons(
-  #     inputId = "includedType",
-  #     label = "",
-  #     choices = c("Source Concepts", "Standard Concepts"),
-  #     selected = "Source Concepts",
-  #     inline = TRUE
-  #   ),
-  #   DT::DTOutput("includedConceptsTable")
-  # ),
-  # shinydashboard::tabItem(tabName = "orphanConcepts",
-  #                         DT::DTOutput("orphanConceptsTable")),
-  # shinydashboard::tabItem(
-  #   tabName = "conceptSetDiagnostics",
-  #   shiny::radioButtons(
-  #     inputId = "conceptSetDiagnosticsType",
-  #     label = "",
-  #     choices = c("Standard Concepts", "Source Concepts"),
-  #     selected = "Standard Concepts",
-  #     inline = TRUE
-  #   ),
-  #   DT::DTOutput("conceptSetDiagnosticsTable")
-  # ),
   shinydashboard::tabItem(
     tabName = "inclusionRuleStats",
     cohortReference("inclusionRuleStatSelectedCohort"),
@@ -649,7 +623,7 @@ bodyTabItems <- shinydashboard::tabItems(
     shinydashboard::box(
       title = "Phenotype notes:",
       collapsible = TRUE,
-      collapsed = FALSE,
+      collapsed = TRUE,
       width = NULL,
       uiOutput("inclusionRuleStatisticsCommentResults")
     ),
@@ -658,6 +632,7 @@ bodyTabItems <- shinydashboard::tabItems(
       collapsible = TRUE,
       collapsed = TRUE,
       width = NULL,
+      column(4,
       shinyWidgets::pickerInput(
         inputId = "selectedCohortIdsForInclusionRuleStatistics",
         label = "Cohort IDs :",
@@ -665,7 +640,16 @@ bodyTabItems <- shinydashboard::tabItems(
         multiple = TRUE,
         width = 300,
         options = shinyWidgetsPickerOptions
-      ),
+      )),
+      column(8,
+      shinyWidgets::pickerInput(
+        inputId = "selectedDatabaseIdsForInclusionRuleStatistics",
+        label = "Database IDs :",
+        choices = NULL,
+        multiple = TRUE,
+        width = 300,
+        options = shinyWidgetsPickerOptions
+      )),
       markdownInput::markdownInput(
         inputId = "inclusionRuleStatisticsComment",
         label = "Notes:",
@@ -713,7 +697,7 @@ bodyTabItems <- shinydashboard::tabItems(
     shinydashboard::box(
       title = "Phenotype notes:",
       collapsible = TRUE,
-      collapsed = FALSE,
+      collapsed = TRUE,
       width = NULL,
       uiOutput("indexEventBreakDownCommentResults")
     ),
@@ -722,6 +706,7 @@ bodyTabItems <- shinydashboard::tabItems(
       collapsible = TRUE,
       collapsed = TRUE,
       width = NULL,
+      column(4,
       shinyWidgets::pickerInput(
         inputId = "selectedCohortIdsForIndexEventBreakDown",
         label = "Cohort IDs :",
@@ -729,7 +714,16 @@ bodyTabItems <- shinydashboard::tabItems(
         multiple = TRUE,
         width = 300,
         options = shinyWidgetsPickerOptions
-      ),
+      )),
+      column(8,
+      shinyWidgets::pickerInput(
+        inputId = "selectedDatabaseIdsForIndexEventBreakDown",
+        label = "Database IDs :",
+        choices = NULL,
+        multiple = TRUE,
+        width = 300,
+        options = shinyWidgetsPickerOptions
+      )),
       markdownInput::markdownInput(
         inputId = "indexEventBreakDownStatisticsComment",
         label = "Notes:",
@@ -775,7 +769,7 @@ bodyTabItems <- shinydashboard::tabItems(
     shinydashboard::box(
       title = "Phenotype notes:",
       collapsible = TRUE,
-      collapsed = FALSE,
+      collapsed = TRUE,
       width = NULL,
       uiOutput("visitContextCommentResults")
     ),
@@ -784,6 +778,7 @@ bodyTabItems <- shinydashboard::tabItems(
       collapsible = TRUE,
       collapsed = TRUE,
       width = NULL,
+      column(4,
       shinyWidgets::pickerInput(
         inputId = "selectedCohortIdsForVisitContext",
         label = "Cohort IDs :",
@@ -791,7 +786,16 @@ bodyTabItems <- shinydashboard::tabItems(
         multiple = TRUE,
         width = 300,
         options = shinyWidgetsPickerOptions
-      ),
+      )),
+      column(8,
+      shinyWidgets::pickerInput(
+        inputId = "selectedDatabaseIdsForVisitContext",
+        label = "Database IDs :",
+        choices = NULL,
+        multiple = TRUE,
+        width = 300,
+        options = shinyWidgetsPickerOptions
+      )),
       markdownInput::markdownInput(
         inputId = "visitContextComment",
         label = "Notes:",
@@ -876,7 +880,7 @@ bodyTabItems <- shinydashboard::tabItems(
     shinydashboard::box(
       title = "Phenotype notes:",
       collapsible = TRUE,
-      collapsed = FALSE,
+      collapsed = TRUE,
       width = NULL,
       uiOutput("cohortCharacterizationCommentResults")
     ),
@@ -885,6 +889,7 @@ bodyTabItems <- shinydashboard::tabItems(
       collapsible = TRUE,
       collapsed = TRUE,
       width = NULL,
+      column(4,
       shinyWidgets::pickerInput(
         inputId = "selectedCohortIdsForCohortCharacterization",
         label = "Cohort IDs :",
@@ -892,7 +897,16 @@ bodyTabItems <- shinydashboard::tabItems(
         multiple = TRUE,
         width = 300,
         options = shinyWidgetsPickerOptions
-      ),
+      )),
+      column(8,
+      shinyWidgets::pickerInput(
+        inputId = "selectedDatabaseIdsForCohortCharacterization",
+        label = "Database IDs :",
+        choices = NULL,
+        multiple = TRUE,
+        width = 300,
+        options = shinyWidgetsPickerOptions
+      )),
       markdownInput::markdownInput(
         inputId = "cohortCharacterizationComment",
         label = "Notes:",
@@ -985,7 +999,7 @@ bodyTabItems <- shinydashboard::tabItems(
     shinydashboard::box(
       title = "Phenotype notes:",
       collapsible = TRUE,
-      collapsed = FALSE,
+      collapsed = TRUE,
       width = NULL,
       uiOutput("compareCohortCharCommentResults")
     ),
@@ -994,6 +1008,7 @@ bodyTabItems <- shinydashboard::tabItems(
       collapsible = TRUE,
       collapsed = TRUE,
       width = NULL,
+      column(4,
       shinyWidgets::pickerInput(
         inputId = "selectedCohortIdsForCompareCohortChar",
         label = "Cohort IDs :",
@@ -1001,7 +1016,16 @@ bodyTabItems <- shinydashboard::tabItems(
         multiple = TRUE,
         width = 300,
         options = shinyWidgetsPickerOptions
-      ),
+      )),
+      column(8,
+      shinyWidgets::pickerInput(
+        inputId = "selectedDatabaseIdsForCompareCohortChar",
+        label = "Database IDs :",
+        choices = NULL,
+        multiple = TRUE,
+        width = 300,
+        options = shinyWidgetsPickerOptions
+      )),
       markdownInput::markdownInput(
         inputId = "compareCohortCharComment",
         label = "Notes:",
@@ -1068,16 +1092,6 @@ bodyTabItems <- shinydashboard::tabItems(
       status = "primary",
       collapsible = TRUE,
       collapsed = FALSE,
-      # shinyWidgets::pickerInput(
-      #              inputId = "temporalCharacterizationPlotCohorts",
-      #              label = "Cohorts for plotting",
-      #              choices = NULL,
-      #              multiple = TRUE,
-      #              inline = TRUE,
-      #              width = 300,
-      #              options = shinyWidgetsPickerOptions
-      #             ),
-      # shiny::htmlOutput(outputId = "hoverInfoIr"),
       ggiraph::ggiraphOutput(
         outputId = "temporalCharacterizationPlot",
         height = "100%"
@@ -1102,7 +1116,7 @@ bodyTabItems <- shinydashboard::tabItems(
     shinydashboard::box(
       title = "Phenotype notes:",
       collapsible = TRUE,
-      collapsed = FALSE,
+      collapsed = TRUE,
       width = NULL,
       uiOutput("temporalCharacterizationCommentResults")
     ),
@@ -1111,6 +1125,7 @@ bodyTabItems <- shinydashboard::tabItems(
       collapsible = TRUE,
       collapsed = TRUE,
       width = NULL,
+      column(4,
       shinyWidgets::pickerInput(
         inputId = "selectedCohortIdsForTemporalCharacterization",
         label = "Cohort IDs :",
@@ -1118,7 +1133,16 @@ bodyTabItems <- shinydashboard::tabItems(
         multiple = TRUE,
         width = 300,
         options = shinyWidgetsPickerOptions
-      ),
+      )),
+      column(8,
+      shinyWidgets::pickerInput(
+        inputId = "selectedDatabaseIdsForTemporalCharacterization",
+        label = "Database IDs :",
+        choices = NULL,
+        multiple = TRUE,
+        width = 300,
+        options = shinyWidgetsPickerOptions
+      )),
       markdownInput::markdownInput(
         inputId = "temporalCharacterizationComment",
         label = "Notes:",
@@ -1139,119 +1163,6 @@ bodyTabItems <- shinydashboard::tabItems(
                                }
              ")
     )
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    # shiny::radioButtons(
-    #   inputId = "tempCharType",
-    #   label = "",
-    #   choices = c("Table", "Plot"),
-    #   selected = "Table",
-    #   inline = TRUE
-    # ),
-    # shiny::conditionalPanel(
-    #   condition = "input.tempCharType=='Table'",
-    #   DT::DTOutput("temporalCharacterizationTable")
-    # ),
-    # shiny::conditionalPanel(
-    #   condition = "input.tempCharType=='Plot'",
-    #   
-    #   tags$table(style = "width:100%",
-    #              tags$tr(
-    #                tags$td(
-    #                  shinyWidgets::pickerInput(
-    #                    inputId = "timeIdChoicesFilter",
-    #                    label = "Filter By Temporal Choices",
-    #                    choices = c("All", temporalCovariateChoices$choices),
-    #                    multiple = FALSE,
-    #                    choicesOpt = list(style = rep_len("color: black;", 999)),
-    #                    options = shinyWidgets::pickerOptions(
-    #                      actionsBox = TRUE,
-    #                      liveSearch = TRUE,
-    #                      size = 10,
-    #                      liveSearchStyle = "contains",
-    #                      liveSearchPlaceholder = "Type here to search",╦
-    #                      virtualScroll = 50
-    #                    )
-    #                  )
-    #                ),
-    #                tags$td(
-    #                  shinyWidgets::pickerInput(
-    #                    inputId = "temporalDomainId",
-    #                    label = "Filter By Covariate Domain",
-    #                    choices = c(
-    #                      "all",
-    #                      "condition",
-    #                      "device",
-    #                      "drug",
-    #                      "measurement",
-    #                      "observation",
-    #                      "procedure",
-    #                      "other"
-    #                    ),
-    #                    multiple = FALSE,
-    #                    choicesOpt = list(style = rep_len("color: black;", 999)),
-    #                    options = shinyWidgets::pickerOptions(
-    #                      actionsBox = TRUE,
-    #                      liveSearch = TRUE,
-    #                      size = 10,
-    #                      liveSearchStyle = 'contains',
-    #                      liveSearchPlaceholder = "Type here to search",
-    #                      virtualScroll = 50
-    #                    )
-    #                  )
-    #                )
-    #              )),
-    #   shinydashboard::box(
-    #     title = "Compare Temporal Characterization",
-    #     width = NULL,
-    #     status = "primary",
-    #     fluidPage(fluidRow(
-    #       column(
-    #         3,
-    #         DT::DTOutput("temporalCharacterizationCovariateTable")
-    #       ),
-    #       column(
-    #         9,
-    #         ggiraph::ggiraphOutput(
-    #           "compareTemporalCharacterizationPlot",
-    #           width = "100%",
-    #           height = "100%"
-    #         )
-    #       )
-    #     ))
-    #   ),
-    #   shiny::conditionalPanel(
-    #     condition = "input.compareTemporalCharacterizationPlot_selected.length>0",
-    #     shinydashboard::box(
-    #       title = "Selected covariates",
-    #       width = NULL,
-    #       status = "primary",
-    #       fluidPage(fluidRow(
-    #         column(
-    #           6,
-    #           DT::DTOutput("temporalCharacterizationCovariateLassoTable")
-    #         ),
-    #         column(
-    #           6,
-    #           ggiraph::ggiraphOutput(
-    #             "compareTemporalCharacterizationLassoPlot",
-    #             width = "100%",
-    #             height = "100%"
-    #           )
-    #         )
-    #       ))
-    #     )
-    #   )
-    # )
   ),
   shinydashboard::tabItem(
     tabName = "cohortOverlap",
@@ -1286,7 +1197,7 @@ bodyTabItems <- shinydashboard::tabItems(
     shinydashboard::box(
       title = "Phenotype notes:",
       collapsible = TRUE,
-      collapsed = FALSE,
+      collapsed = TRUE,
       width = NULL,
       uiOutput("cohortOverlapCommentResults")
     ),
@@ -1295,6 +1206,7 @@ bodyTabItems <- shinydashboard::tabItems(
       collapsible = TRUE,
       collapsed = TRUE,
       width = NULL,
+      column(4,
       shinyWidgets::pickerInput(
         inputId = "selectedCohortIdsForCohortOverlap",
         label = "Cohort IDs :",
@@ -1302,7 +1214,16 @@ bodyTabItems <- shinydashboard::tabItems(
         multiple = TRUE,
         width = 300,
         options = shinyWidgetsPickerOptions
-      ),
+      )),
+      column(8,
+      shinyWidgets::pickerInput(
+        inputId = "selectedDatabaseIdsForCohortOverlap",
+        label = "Database IDs :",
+        choices = NULL,
+        multiple = TRUE,
+        width = 300,
+        options = shinyWidgetsPickerOptions
+      )),
       markdownInput::markdownInput(
         inputId = "cohortOverlapComment",
         label = "Notes:",
@@ -1324,58 +1245,6 @@ bodyTabItems <- shinydashboard::tabItems(
              ")
     )
   ),
-  # shinydashboard::tabItem(
-  #   tabName = "compareCohortCharacterization",
-  #   #cohortReference("cohortCharCompareSelectedCohort"),
-  #   shiny::radioButtons(
-  #     inputId = "charCompareType",
-  #     label = "",
-  #     choices = c("Pretty table", "Raw table", "Plot"),
-  #     selected = "Pretty table",
-  #     inline = TRUE
-  #   ),
-  #   shiny::conditionalPanel(condition = "input.charCompareType=='Pretty table' | input.charCompareType=='Raw table'",
-  #                           DT::DTOutput("charCompareTable")),
-  #   shiny::conditionalPanel(
-  #     condition = "input.charCompareType=='Plot'",
-  #     shinydashboard::box(
-  #       title = "Compare Cohort Characterization",
-  #       width = NULL,
-  #       status = "primary",
-  #       shiny::htmlOutput("compareCohortCharacterizationSelectedCohort"),
-  #       shinyWidgets::pickerInput(
-  #         inputId = "domainId",
-  #         label = "Filter By Domain",
-  #         choices = c(
-  #           "all",
-  #           "condition",
-  #           "device",
-  #           "drug",
-  #           "measurement",
-  #           "observation",
-  #           "procedure",
-  #           "other"
-  #         ),
-  #         multiple = FALSE,
-  #         choicesOpt = list(style = rep_len("color: black;", 999)),
-  #         options = shinyWidgets::pickerOptions(
-  #           actionsBox = TRUE,
-  #           liveSearch = TRUE,
-  #           size = 10,
-  #           liveSearchStyle = 'contains',
-  #           liveSearchPlaceholder = "Type here to search",
-  #           virtualScroll = 50
-  #         )
-  #         
-  #       ),
-  #       ggiraph::ggiraphOutput(
-  #         outputId = "charComparePlot",
-  #         width = "100%",
-  #         height = "100%"
-  #       )
-  #     )
-  #   )
-  # ),
   shinydashboard::tabItem(tabName = "databaseInformation",
                           DT::DTOutput("databaseInformationTable"),
                           )
