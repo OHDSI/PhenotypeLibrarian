@@ -197,21 +197,27 @@ getIndexEventBreakdown <- function(dataSource = .GlobalEnv,
       ),
       by = c("conceptId"))
   } else {
-    sql <- "SELECT index_event_breakdown.*,
-              standard_concept.concept_name AS concept_name
+    sql <- "SELECT index_event_breakdown.*
             FROM  @results_database_schema.index_event_breakdown
-            INNER JOIN  @vocabulary_database_schema.concept standard_concept
-              ON index_event_breakdown.concept_id = standard_concept.concept_id
             WHERE cohort_id in (@cohort_ids);"
     data <-
       renderTranslateQuerySql(
         connection = dataSource$connection,
         sql = sql,
         results_database_schema = dataSource$resultsDatabaseSchema,
-        vocabulary_database_schema = dataSource$vocabularyDatabaseSchema,
         cohort_ids = cohortIds,
         snakeCaseToCamelCase = TRUE
       )
+    conceptIdDetails <- ConceptSetDiagnostics::getConceptIdDetails(conceptIds = data$conceptId %>% unique(), 
+                                                                   connection = dataSource$connection, 
+                                                                   vocabularyDatabaseSchema = 'vocabulary')
+    
+    data <- data %>% 
+      dplyr::left_join(y = conceptIdDetails, 
+                       by = "conceptId") %>% 
+      dplyr::left_join(y = cohortCounts, 
+                       by = c("cohortId", "databaseId"))
+    return(data)
   }
   
   data <- data %>%
