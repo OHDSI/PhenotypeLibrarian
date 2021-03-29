@@ -112,7 +112,7 @@ shiny::shinyServer(function(input, output, session) {
           )
     }
     
-    menuList[[13]] <-
+    menuList[[14]] <-
       shinydashboard::menuItem(text = "Database information", tabName = "databaseInformation")
     
     shinydashboard::sidebarMenu(menuList)
