@@ -193,12 +193,21 @@ getIndexEventBreakdown <- function(dataSource = .GlobalEnv,
       dplyr::inner_join(dplyr::select(
         get("concept", envir = dataSource),
         .data$conceptId,
-        .data$conceptName
+        .data$conceptName,
+        .data$domainId,
+        .data$vocabularyId,
+        .data$standardConcept
       ),
       by = c("conceptId"))
   } else {
-    sql <- "SELECT index_event_breakdown.*
+    sql <- "SELECT index_event_breakdown.*,
+              concept.concept_name,
+              concept.domain_id,
+              concept.vocabulary_id,
+              concept.standard_concept,
             FROM  @results_database_schema.index_event_breakdown
+            INNER JOIN  @vocabulary_database_schema.concept
+              ON index_event_breakdown.concept_id = concept.concept_id
             WHERE cohort_id in (@cohort_ids);"
     data <-
       renderTranslateQuerySql(
