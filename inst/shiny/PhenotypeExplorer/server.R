@@ -3636,15 +3636,18 @@ shiny::shinyServer(function(input, output, session) {
   }, server = TRUE)
   
   shiny::observeEvent(input$cohortCountsInfo, {
-    showInfoBox(title = "Cohort Counts", htmlFileName = "html/cohortCounts.html")
+    showInfoBox(title = "Cohort Counts", 
+                htmlFileName = "html/cohortCounts.html")
   })
   
   shiny::observeEvent(input$incidenceRateInfo, {
-    showInfoBox(title = "Incidence Rate", htmlFileName = "html/incidenceRate.html")
+    showInfoBox(title = "Incidence Rate", 
+                htmlFileName = "html/incidenceRate.html")
   })
   
   shiny::observeEvent(input$timeDistributionInfo, {
-    showInfoBox(title = "Time Distributions", htmlFileName = "html/timeDistribution.html")
+    showInfoBox(title = "Time Distributions", 
+                htmlFileName = "html/timeDistribution.html")
   })
   
   shiny::observeEvent(input$conceptSetDiagnosticsInfo, {
@@ -3658,7 +3661,8 @@ shiny::shinyServer(function(input, output, session) {
   })
   
   shiny::observeEvent(input$indexEventBreakdownInfo, {
-    showInfoBox(title = "Index Event Breakdown", htmlFileName = "html/indexEventBreakdown.html")
+    showInfoBox(title = "Index Event Breakdown", 
+                htmlFileName = "html/indexEventBreakdown.html")
   })
   
   shiny::observeEvent(input$visitContextInfo, {
@@ -3682,7 +3686,8 @@ shiny::shinyServer(function(input, output, session) {
   })
   
   shiny::observeEvent(input$cohortOverlapInfo, {
-    showInfoBox(title = "Cohort Overlap", htmlFileName = "html/cohortOverlap.html")
+    showInfoBox(title = "Cohort Overlap",
+                htmlFileName = "html/cohortOverlap.html")
   })
   
   cohortReference <- function(dashboardId) {
