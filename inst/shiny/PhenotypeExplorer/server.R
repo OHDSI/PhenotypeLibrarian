@@ -3647,15 +3647,6 @@ shiny::shinyServer(function(input, output, session) {
     showInfoBox(title = "Time Distributions", htmlFileName = "html/timeDistribution.html")
   })
   
-  shiny::observeEvent(input$includedConceptsInfo, {
-    showInfoBox(title = "Included (Source) Concepts",
-                htmlFileName = "html/includedConcepts.html")
-  })
-  
-  shiny::observeEvent(input$orphanConceptsInfo, {
-    showInfoBox(title = "Orphan (Source) Concepts", htmlFileName = "html/orphanConcepts.html")
-  })
-  
   shiny::observeEvent(input$conceptSetDiagnosticsInfo, {
     showInfoBox(title = "Concept Set Diagnostics",
                 htmlFileName = "html/conceptSetDiagnostics.html")
