@@ -17,19 +17,18 @@ assign("server", paste(Sys.getenv("shinydbServer"),
 assign("vocabularyDatabaseSchema",
        'vocabulary',
        envir = .GlobalEnv)
-# assign("resultsDatabaseSchema",
-#        'aesi20210324',
-#        envir = .GlobalEnv)
 assign("resultsDatabaseSchema",
-       'eunomia',
+       'aesi20210403',
        envir = .GlobalEnv)
+# assign("resultsDatabaseSchema",
+#        'eunomia',
+#        envir = .GlobalEnv)
 
 
 source("R/DisplayFunctions.R")
 source("R/Tables.R")
 source("R/Plots.R")
 source("R/Results.R")
-source("R/DataPulls.R")
 source("R/Connections.R")
 source("R/HelperFunctions.R")
 source("R/ModifyDataSource.R")

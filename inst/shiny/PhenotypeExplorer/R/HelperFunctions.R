@@ -78,6 +78,8 @@ standardDataTable <- function(data,
                                            'descendants',
                                            'includeMapped',
                                            'mapped',
+                                           'domainField',
+                                           'domainTable',
                                            'conceptInSet'
                                            )
   
@@ -286,6 +288,7 @@ convertMdToHtml <- function(markdown) {
 
 pivotIndexBreakDownData <- function(data, variable) {
   pivotByCohort <- c('cohortId', 'conceptId', 'conceptName',
+                     'domainField', 'domainTable',
                      'domainId', 'vocabularyId', 'standardConcept')
   if (nrow(data) > 0) {
     data <- data %>%

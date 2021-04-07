@@ -2908,6 +2908,9 @@ shiny::shinyServer(function(input, output, session) {
           data <-
             pivotIndexBreakDownData(data = data, variable = 'percentSubjects')
         }
+        data <- data %>% 
+          dplyr::relocate(dplyr::starts_with(match = "domain", ignore.case = TRUE), 
+                          .after = last_col())
         dataTable <- standardDataTable(data, selected = NULL)
         return(dataTable)
       }
