@@ -193,7 +193,10 @@ getIndexEventBreakdown <- function(dataSource = .GlobalEnv,
       dplyr::inner_join(dplyr::select(
         get("concept", envir = dataSource),
         .data$conceptId,
-        .data$conceptName
+        .data$conceptName,
+        .data$domainId,
+        .data$vocabularyId,
+        .data$standardConcept
       ),
       by = c("conceptId"))
   } else {
@@ -210,7 +213,7 @@ getIndexEventBreakdown <- function(dataSource = .GlobalEnv,
       )
     conceptIdDetails <- ConceptSetDiagnostics::getConceptIdDetails(conceptIds = data$conceptId %>% unique(), 
                                                                    connection = dataSource$connection, 
-                                                                   vocabularyDatabaseSchema = 'vocabulary')
+                                                                   vocabularyDatabaseSchema = dataSource$vocabularyDatabaseSchema)
     
     data <- data %>% 
       dplyr::left_join(y = conceptIdDetails, 

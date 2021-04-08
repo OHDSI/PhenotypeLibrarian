@@ -112,7 +112,7 @@ shiny::shinyServer(function(input, output, session) {
           )
     }
     
-    menuList[[13]] <-
+    menuList[[14]] <-
       shinydashboard::menuItem(text = "Database information", tabName = "databaseInformation")
     
     shinydashboard::sidebarMenu(menuList)
@@ -2908,6 +2908,9 @@ shiny::shinyServer(function(input, output, session) {
           data <-
             pivotIndexBreakDownData(data = data, variable = 'percentSubjects')
         }
+        data <- data %>% 
+          dplyr::relocate(dplyr::starts_with(match = "domain", ignore.case = TRUE), 
+                          .after = last_col())
         dataTable <- standardDataTable(data, selected = NULL)
         return(dataTable)
       }
@@ -3636,24 +3639,18 @@ shiny::shinyServer(function(input, output, session) {
   }, server = TRUE)
   
   shiny::observeEvent(input$cohortCountsInfo, {
-    showInfoBox(title = "Cohort Counts", htmlFileName = "html/cohortCounts.html")
+    showInfoBox(title = "Cohort Counts", 
+                htmlFileName = "html/cohortCounts.html")
   })
   
   shiny::observeEvent(input$incidenceRateInfo, {
-    showInfoBox(title = "Incidence Rate", htmlFileName = "html/incidenceRate.html")
+    showInfoBox(title = "Incidence Rate", 
+                htmlFileName = "html/incidenceRate.html")
   })
   
   shiny::observeEvent(input$timeDistributionInfo, {
-    showInfoBox(title = "Time Distributions", htmlFileName = "html/timeDistribution.html")
-  })
-  
-  shiny::observeEvent(input$includedConceptsInfo, {
-    showInfoBox(title = "Included (Source) Concepts",
-                htmlFileName = "html/includedConcepts.html")
-  })
-  
-  shiny::observeEvent(input$orphanConceptsInfo, {
-    showInfoBox(title = "Orphan (Source) Concepts", htmlFileName = "html/orphanConcepts.html")
+    showInfoBox(title = "Time Distributions", 
+                htmlFileName = "html/timeDistribution.html")
   })
   
   shiny::observeEvent(input$conceptSetDiagnosticsInfo, {
@@ -3667,7 +3664,8 @@ shiny::shinyServer(function(input, output, session) {
   })
   
   shiny::observeEvent(input$indexEventBreakdownInfo, {
-    showInfoBox(title = "Index Event Breakdown", htmlFileName = "html/indexEventBreakdown.html")
+    showInfoBox(title = "Index Event Breakdown", 
+                htmlFileName = "html/indexEventBreakdown.html")
   })
   
   shiny::observeEvent(input$visitContextInfo, {
@@ -3691,7 +3689,8 @@ shiny::shinyServer(function(input, output, session) {
   })
   
   shiny::observeEvent(input$cohortOverlapInfo, {
-    showInfoBox(title = "Cohort Overlap", htmlFileName = "html/cohortOverlap.html")
+    showInfoBox(title = "Cohort Overlap",
+                htmlFileName = "html/cohortOverlap.html")
   })
   
   cohortReference <- function(dashboardId) {
