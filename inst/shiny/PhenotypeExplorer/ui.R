@@ -136,7 +136,9 @@ bodyTabItems <- shinydashboard::tabItems(
       width = NULL,
       status = "primary",
       shiny::column(width = 10,
-                    shiny::uiOutput(outputId = "cohortSearchSelectedCohort")),
+                    tags$div(style = "max-height: 100px; overflow-y: auto",
+                             shiny::uiOutput(outputId = "cohortSearchSelectedCohort"))
+      ),
       shiny::column(width = 2,
                     shiny::actionButton(
                       inputId = "loadSelectedCohorts",
