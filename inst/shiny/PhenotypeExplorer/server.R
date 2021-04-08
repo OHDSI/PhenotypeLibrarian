@@ -3113,7 +3113,7 @@ shiny::shinyServer(function(input, output, session) {
           dplyr::pull(.data$cohortId)
         data <- cohortCountsPreFetch()
         data <- data %>%
-          dplyr::filter(.data$databaseId %in% input$characterizationTablePrettyDtDropDownDatabase) %>%
+          dplyr::filter(.data$databaseId == input$characterizationTablePrettyDtDropDownDatabase) %>%
           dplyr::filter(.data$cohortId %in% cohortIdSelectedForPrettyTable)
         
         output <- paste0(
@@ -3147,7 +3147,7 @@ shiny::shinyServer(function(input, output, session) {
             dplyr::filter(cohortName == input$characterizationTablePrettyDtDropDownCohort) %>% 
             dplyr::pull(.data$cohortId)
           data <- data %>%
-            dplyr::filter(.data$databaseId %in% input$characterizationTablePrettyDtDropDownDatabase) %>% 
+            dplyr::filter(.data$databaseId == input$characterizationTablePrettyDtDropDownDatabase) %>% 
             dplyr::filter(.data$cohortId %in% cohortIdSelectedForPrettyTable) %>% 
             dplyr::select(.data$characteristic, .data$percent)
           data <- data %>% 
@@ -3239,7 +3239,7 @@ shiny::shinyServer(function(input, output, session) {
       session = session,
       inputId = "compareCharacterizationTableDropCohort2",
       choices = characterizationPrettyCohortFilter(),
-      selected = characterizationPrettyCohortFilter()[1]
+      selected = characterizationPrettyCohortFilter()[2]
     )
     shinyWidgets::updatePickerInput(
       session = session,
@@ -3306,14 +3306,14 @@ shiny::shinyServer(function(input, output, session) {
         dplyr::pull(.data$cohortId)
       
       targetCohortData <- cohortCountData %>%
-        dplyr::filter(.data$databaseId %in% input$characterizationTablePrettyDtDropDownDatabase) %>%
+        dplyr::filter(.data$databaseId == input$compareCharacterizationTableDropDownDatabase) %>%
         dplyr::filter(.data$cohortId %in% cohortIdSelectedForPrettyTableComparator)
       
       outputComarator <- paste0(
         "Target cohort : The number of subjects in the ",
         input$compareCharacterizationTableDropCohort1,
         " cohort for ",
-        input$characterizationTablePrettyDtDropDownDatabase,
+        input$compareCharacterizationTableDropDownDatabase,
         " is ",
         scales::comma(targetCohortData$cohortSubjects),
         " while the number of events is ",
@@ -3324,14 +3324,14 @@ shiny::shinyServer(function(input, output, session) {
         dplyr::filter(cohortName == input$compareCharacterizationTableDropCohort2) %>%
         dplyr::pull(.data$cohortId)
       comparatorCohortData <- cohortCountData %>%
-        dplyr::filter(.data$databaseId %in% input$characterizationTablePrettyDtDropDownDatabase) %>%
+        dplyr::filter(.data$databaseId %in% input$compareCharacterizationTableDropDownDatabase) %>%
         dplyr::filter(.data$cohortId %in% cohortIdSelectedForPrettyTabletarget)
       
       outputTarget <- paste0(
         "Comaparator cohort: The number of subjects in the ",
         input$compareCharacterizationTableDropCohort2,
         " cohort for ",
-        input$characterizationTablePrettyDtDropDownDatabase,
+        input$compareCharacterizationTableDropDownDatabase,
         " is ",
         scales::comma(comparatorCohortData$cohortSubjects),
         " while the number of events is ",

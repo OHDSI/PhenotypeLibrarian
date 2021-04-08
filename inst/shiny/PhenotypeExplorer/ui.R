@@ -834,7 +834,7 @@ bodyTabItems <- shinydashboard::tabItems(
                       inputId = "characterizationTablePrettyDtDropDownDatabase",
                       label = "Database",
                       choices = NULL,
-                      multiple = TRUE,
+                      multiple = FALSE,
                       inline = FALSE,
                       width = 300,
                       options = shinyWidgetsPickerOptions
@@ -850,13 +850,6 @@ bodyTabItems <- shinydashboard::tabItems(
                       options = shinyWidgetsPickerOptions
                     )),
       shiny::uiOutput(outputId = "characterizationTablePrettyCohortCountText"),
-      shinydashboard::box(
-        title = NULL, #Plots (to do)
-        width = NULL,
-        status = NULL,
-        collapsible = TRUE,
-        collapsed = TRUE
-      ),
       shinydashboard::box(
         title = NULL,
         width = NULL,
