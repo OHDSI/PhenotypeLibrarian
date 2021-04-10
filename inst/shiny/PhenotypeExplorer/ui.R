@@ -1004,7 +1004,21 @@ bodyTabItems <- shinydashboard::tabItems(
       status = "primary",
       collapsible = TRUE,
       collapsed = TRUE,
-      DT::DTOutput("compareCharacterizationTableDt")
+      shiny::tabsetPanel(
+        id = "compareCharacterizationTabsetPanel",
+        shiny::tabPanel(
+          title = "Proportion",
+          value = "compareCharacterizationProportionTableDtTabPanel",
+          tags$br(),
+          DT::DTOutput(outputId = "compareCharacterizationProportionTableDt")
+        ),
+        shiny::tabPanel(
+          title = "Continuous",
+          value = "compareCharacterizationContinuousTableDtTabPanel",
+          tags$br(),
+          DT::DTOutput(outputId = "compareCharacterizationContinuousTableDt")
+        )
+      )
     ),
     shinydashboard::box(
       title = "Phenotype notes:",

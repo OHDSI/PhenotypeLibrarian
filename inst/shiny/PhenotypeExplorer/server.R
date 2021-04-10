@@ -3375,13 +3375,38 @@ shiny::shinyServer(function(input, output, session) {
     }
   })
   
-  output$compareCharacterizationTableDt <-
+  output$compareCharacterizationProportionTableDt <-
     DT::renderDT(expr = {
       shiny::withProgress(message = 'Rendering Compare Characterization table', value = 0, {
-        data <- compareCharacterizationData() 
+        data <- compareCharacterizationData() %>% 
+          dplyr::filter(.data$isBinary == 'Y')
         if ('databaseId' %in% colnames(data)) {
           data <- data %>% 
             dplyr::select(-.data$databaseId)
+        }
+        if ('isBinary' %in% colnames(data)) {
+          data <- data %>% 
+            dplyr::select(-.data$isBinary)
+        }
+        if (nrow(data) > 0) {
+          table <- standardDataTable(data = data, pageLength = 100, selected = NULL)
+          return(table)
+        }
+      })
+    }, server = TRUE)
+  
+  output$compareCharacterizationContinuousTableDt <-
+    DT::renderDT(expr = {
+      shiny::withProgress(message = 'Rendering Compare Characterization table', value = 0, {
+        data <- compareCharacterizationData() %>% 
+          dplyr::filter(.data$isBinary == 'N')
+        if ('databaseId' %in% colnames(data)) {
+          data <- data %>% 
+            dplyr::select(-.data$databaseId)
+        }
+        if ('isBinary' %in% colnames(data)) {
+          data <- data %>% 
+            dplyr::select(-.data$isBinary)
         }
         if (nrow(data) > 0) {
           table <- standardDataTable(data = data, pageLength = 100, selected = NULL)
