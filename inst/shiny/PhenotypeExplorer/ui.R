@@ -871,7 +871,21 @@ bodyTabItems <- shinydashboard::tabItems(
         status = "primary",
         collapsible = FALSE
       ),
-      DT::DTOutput("characterizationTableRaw")
+      shiny::tabsetPanel(
+        id = "characterizationTableRawTabsetPanel",
+        shiny::tabPanel(
+          title = "Proportion",
+          value = "characterizationTableRawProportionTab",
+          tags$br(),
+          DT::DTOutput(outputId = "characterizationTableRawProportion")
+        ),
+        shiny::tabPanel(
+          title = "Continuous",
+          value = "characterizationTableRawContinuousTab",
+          tags$br(),
+          DT::DTOutput(outputId = "characterizationTableRawContinuous")
+        )
+      )
     ),
     shinydashboard::box(
       title = "Phenotype notes:",

@@ -3027,17 +3027,18 @@ shiny::shinyServer(function(input, output, session) {
     return(data)
   })
   
-  output$characterizationTableRaw <-
+  output$characterizationTableRawProportion <-
     DT::renderDT(expr = {
       shiny::withProgress(message = 'Rendering characterization table', value = 0, {
         if (nrow(characterizationDataFiltered()) <= 0) {
           return(dplyr::tibble())
         }
         data <- characterizationDataFiltered() %>%
+          dplyr::filter(.data$isBinary == 'Y') %>% 
           dplyr::relocate(.data$databaseId,
                           .data$shortName,
                           .data$cohortId) %>% 
-          dplyr::select(-.data$shortName)
+          dplyr::select(-.data$shortName, -.data$isBinary)
         if (nrow(data) > 0) {
           table <- standardDataTable(data = data, selected = NULL)
           return(table)
@@ -3046,6 +3047,27 @@ shiny::shinyServer(function(input, output, session) {
         }
       })
     }, server = TRUE) 
+  
+  output$characterizationTableRawContinuous <-
+    DT::renderDT(expr = {
+      shiny::withProgress(message = 'Rendering characterization table', value = 0, {
+        if (nrow(characterizationDataFiltered()) <= 0) {
+          return(dplyr::tibble())
+        }
+        data <- characterizationDataFiltered() %>%
+          dplyr::filter(.data$isBinary == 'N') %>% 
+          dplyr::relocate(.data$databaseId,
+                          .data$shortName,
+                          .data$cohortId) %>% 
+          dplyr::select(-.data$shortName, -.data$isBinary)
+        if (nrow(data) > 0) {
+          table <- standardDataTable(data = data, selected = NULL)
+          return(table)
+        } else {
+          dplyr::tibble("No characterization data")
+        }
+      })
+    }, server = TRUE)
   
   characterizationTablePretty <- shiny::reactive(x = {
     data <- characterizationDataFiltered()
