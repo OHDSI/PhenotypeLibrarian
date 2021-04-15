@@ -7,8 +7,8 @@ assign(x = "appSignatureValue",
        value = Sys.getenv("PhenotypeLibrarianAppSignatureValue"), 
        envir = .GlobalEnv)
 
-assign("username", Sys.getenv("charybdisdbUser"), envir = .GlobalEnv)
-assign("password", Sys.getenv("charybdisdbPw"), envir = .GlobalEnv)
+assign("username", Sys.getenv("shinyDbUser"), envir = .GlobalEnv)
+assign("password", Sys.getenv("shinyDbPassword"), envir = .GlobalEnv)
 assign("dbms", 'postgres', envir = .GlobalEnv)
 assign("server", paste(Sys.getenv("shinydbServer"),
                        Sys.getenv("shinydbDatabase"),
