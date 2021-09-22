@@ -136,7 +136,9 @@ bodyTabItems <- shinydashboard::tabItems(
       width = NULL,
       status = "primary",
       shiny::column(width = 10,
-                    shiny::uiOutput(outputId = "cohortSearchSelectedCohort")),
+                    tags$div(style = "max-height: 100px; overflow-y: auto",
+                             shiny::uiOutput(outputId = "cohortSearchSelectedCohort"))
+      ),
       shiny::column(width = 2,
                     shiny::actionButton(
                       inputId = "loadSelectedCohorts",
@@ -832,7 +834,7 @@ bodyTabItems <- shinydashboard::tabItems(
                       inputId = "characterizationTablePrettyDtDropDownDatabase",
                       label = "Database",
                       choices = NULL,
-                      multiple = TRUE,
+                      multiple = FALSE,
                       inline = FALSE,
                       width = 300,
                       options = shinyWidgetsPickerOptions
@@ -848,13 +850,6 @@ bodyTabItems <- shinydashboard::tabItems(
                       options = shinyWidgetsPickerOptions
                     )),
       shiny::uiOutput(outputId = "characterizationTablePrettyCohortCountText"),
-      shinydashboard::box(
-        title = NULL, #Plots (to do)
-        width = NULL,
-        status = NULL,
-        collapsible = TRUE,
-        collapsed = TRUE
-      ),
       shinydashboard::box(
         title = NULL,
         width = NULL,
@@ -876,7 +871,21 @@ bodyTabItems <- shinydashboard::tabItems(
         status = "primary",
         collapsible = FALSE
       ),
-      DT::DTOutput("characterizationTableRaw")
+      shiny::tabsetPanel(
+        id = "characterizationTableRawTabsetPanel",
+        shiny::tabPanel(
+          title = "Proportion",
+          value = "characterizationTableRawProportionTab",
+          tags$br(),
+          DT::DTOutput(outputId = "characterizationTableRawProportion")
+        ),
+        shiny::tabPanel(
+          title = "Continuous",
+          value = "characterizationTableRawContinuousTab",
+          tags$br(),
+          DT::DTOutput(outputId = "characterizationTableRawContinuous")
+        )
+      )
     ),
     shinydashboard::box(
       title = "Phenotype notes:",
@@ -995,7 +1004,21 @@ bodyTabItems <- shinydashboard::tabItems(
       status = "primary",
       collapsible = TRUE,
       collapsed = TRUE,
-      DT::DTOutput("compareCharacterizationTableDt")
+      shiny::tabsetPanel(
+        id = "compareCharacterizationTabsetPanel",
+        shiny::tabPanel(
+          title = "Proportion",
+          value = "compareCharacterizationProportionTableDtTabPanel",
+          tags$br(),
+          DT::DTOutput(outputId = "compareCharacterizationProportionTableDt")
+        ),
+        shiny::tabPanel(
+          title = "Continuous",
+          value = "compareCharacterizationContinuousTableDtTabPanel",
+          tags$br(),
+          DT::DTOutput(outputId = "compareCharacterizationContinuousTableDt")
+        )
+      )
     ),
     shinydashboard::box(
       title = "Phenotype notes:",

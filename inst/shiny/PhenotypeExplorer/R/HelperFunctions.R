@@ -2,7 +2,9 @@ cohortReference <- function(outputId) {
   shinydashboard::box(# title = "Reference",
     status = "warning",
     width = "100%",
-    shiny::uiOutput(outputId = outputId))
+    tags$div(style = "max-height: 100px; overflow-y: auto",
+             shiny::uiOutput(outputId = outputId))
+    )
 }
 
 standardDataTable <- function(data, 

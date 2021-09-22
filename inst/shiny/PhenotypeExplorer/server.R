@@ -3027,17 +3027,18 @@ shiny::shinyServer(function(input, output, session) {
     return(data)
   })
   
-  output$characterizationTableRaw <-
+  output$characterizationTableRawProportion <-
     DT::renderDT(expr = {
       shiny::withProgress(message = 'Rendering characterization table', value = 0, {
         if (nrow(characterizationDataFiltered()) <= 0) {
           return(dplyr::tibble())
         }
         data <- characterizationDataFiltered() %>%
+          dplyr::filter(.data$isBinary == 'Y') %>% 
           dplyr::relocate(.data$databaseId,
                           .data$shortName,
                           .data$cohortId) %>% 
-          dplyr::select(-.data$shortName)
+          dplyr::select(-.data$shortName, -.data$isBinary)
         if (nrow(data) > 0) {
           table <- standardDataTable(data = data, selected = NULL)
           return(table)
@@ -3046,6 +3047,27 @@ shiny::shinyServer(function(input, output, session) {
         }
       })
     }, server = TRUE) 
+  
+  output$characterizationTableRawContinuous <-
+    DT::renderDT(expr = {
+      shiny::withProgress(message = 'Rendering characterization table', value = 0, {
+        if (nrow(characterizationDataFiltered()) <= 0) {
+          return(dplyr::tibble())
+        }
+        data <- characterizationDataFiltered() %>%
+          dplyr::filter(.data$isBinary == 'N') %>% 
+          dplyr::relocate(.data$databaseId,
+                          .data$shortName,
+                          .data$cohortId) %>% 
+          dplyr::select(-.data$shortName, -.data$isBinary)
+        if (nrow(data) > 0) {
+          table <- standardDataTable(data = data, selected = NULL)
+          return(table)
+        } else {
+          dplyr::tibble("No characterization data")
+        }
+      })
+    }, server = TRUE)
   
   characterizationTablePretty <- shiny::reactive(x = {
     data <- characterizationDataFiltered()
@@ -3113,7 +3135,7 @@ shiny::shinyServer(function(input, output, session) {
           dplyr::pull(.data$cohortId)
         data <- cohortCountsPreFetch()
         data <- data %>%
-          dplyr::filter(.data$databaseId %in% input$characterizationTablePrettyDtDropDownDatabase) %>%
+          dplyr::filter(.data$databaseId == input$characterizationTablePrettyDtDropDownDatabase) %>%
           dplyr::filter(.data$cohortId %in% cohortIdSelectedForPrettyTable)
         
         output <- paste0(
@@ -3147,7 +3169,7 @@ shiny::shinyServer(function(input, output, session) {
             dplyr::filter(cohortName == input$characterizationTablePrettyDtDropDownCohort) %>% 
             dplyr::pull(.data$cohortId)
           data <- data %>%
-            dplyr::filter(.data$databaseId %in% input$characterizationTablePrettyDtDropDownDatabase) %>% 
+            dplyr::filter(.data$databaseId == input$characterizationTablePrettyDtDropDownDatabase) %>% 
             dplyr::filter(.data$cohortId %in% cohortIdSelectedForPrettyTable) %>% 
             dplyr::select(.data$characteristic, .data$percent)
           data <- data %>% 
@@ -3239,7 +3261,7 @@ shiny::shinyServer(function(input, output, session) {
       session = session,
       inputId = "compareCharacterizationTableDropCohort2",
       choices = characterizationPrettyCohortFilter(),
-      selected = characterizationPrettyCohortFilter()[1]
+      selected = characterizationPrettyCohortFilter()[2]
     )
     shinyWidgets::updatePickerInput(
       session = session,
@@ -3306,14 +3328,14 @@ shiny::shinyServer(function(input, output, session) {
         dplyr::pull(.data$cohortId)
       
       targetCohortData <- cohortCountData %>%
-        dplyr::filter(.data$databaseId %in% input$characterizationTablePrettyDtDropDownDatabase) %>%
+        dplyr::filter(.data$databaseId == input$compareCharacterizationTableDropDownDatabase) %>%
         dplyr::filter(.data$cohortId %in% cohortIdSelectedForPrettyTableComparator)
       
       outputComarator <- paste0(
         "Target cohort : The number of subjects in the ",
         input$compareCharacterizationTableDropCohort1,
         " cohort for ",
-        input$characterizationTablePrettyDtDropDownDatabase,
+        input$compareCharacterizationTableDropDownDatabase,
         " is ",
         scales::comma(targetCohortData$cohortSubjects),
         " while the number of events is ",
@@ -3324,14 +3346,14 @@ shiny::shinyServer(function(input, output, session) {
         dplyr::filter(cohortName == input$compareCharacterizationTableDropCohort2) %>%
         dplyr::pull(.data$cohortId)
       comparatorCohortData <- cohortCountData %>%
-        dplyr::filter(.data$databaseId %in% input$characterizationTablePrettyDtDropDownDatabase) %>%
+        dplyr::filter(.data$databaseId %in% input$compareCharacterizationTableDropDownDatabase) %>%
         dplyr::filter(.data$cohortId %in% cohortIdSelectedForPrettyTabletarget)
       
       outputTarget <- paste0(
         "Comaparator cohort: The number of subjects in the ",
         input$compareCharacterizationTableDropCohort2,
         " cohort for ",
-        input$characterizationTablePrettyDtDropDownDatabase,
+        input$compareCharacterizationTableDropDownDatabase,
         " is ",
         scales::comma(comparatorCohortData$cohortSubjects),
         " while the number of events is ",
@@ -3353,13 +3375,38 @@ shiny::shinyServer(function(input, output, session) {
     }
   })
   
-  output$compareCharacterizationTableDt <-
+  output$compareCharacterizationProportionTableDt <-
     DT::renderDT(expr = {
       shiny::withProgress(message = 'Rendering Compare Characterization table', value = 0, {
-        data <- compareCharacterizationData() 
+        data <- compareCharacterizationData() %>% 
+          dplyr::filter(.data$isBinary == 'Y')
         if ('databaseId' %in% colnames(data)) {
           data <- data %>% 
             dplyr::select(-.data$databaseId)
+        }
+        if ('isBinary' %in% colnames(data)) {
+          data <- data %>% 
+            dplyr::select(-.data$isBinary)
+        }
+        if (nrow(data) > 0) {
+          table <- standardDataTable(data = data, pageLength = 100, selected = NULL)
+          return(table)
+        }
+      })
+    }, server = TRUE)
+  
+  output$compareCharacterizationContinuousTableDt <-
+    DT::renderDT(expr = {
+      shiny::withProgress(message = 'Rendering Compare Characterization table', value = 0, {
+        data <- compareCharacterizationData() %>% 
+          dplyr::filter(.data$isBinary == 'N')
+        if ('databaseId' %in% colnames(data)) {
+          data <- data %>% 
+            dplyr::select(-.data$databaseId)
+        }
+        if ('isBinary' %in% colnames(data)) {
+          data <- data %>% 
+            dplyr::select(-.data$isBinary)
         }
         if (nrow(data) > 0) {
           table <- standardDataTable(data = data, pageLength = 100, selected = NULL)
